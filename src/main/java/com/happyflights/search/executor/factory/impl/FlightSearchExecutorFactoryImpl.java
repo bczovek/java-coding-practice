@@ -6,10 +6,8 @@ import com.happyflights.search.executor.factory.FlightSearchExecutorFactory;
 import com.happyflights.search.model.FlightSearchCriteria;
 import com.happyflights.search.strategy.filter.impl.CancelableFlightFilter;
 import com.happyflights.search.strategy.filter.impl.MaximumPriceFlightFilter;
-import com.happyflights.search.strategy.limit.impl.NoOpLimiting;
 import com.happyflights.search.strategy.sort.impl.LengthFlightSorting;
 import com.happyflights.search.strategy.limit.impl.MaxResultLimiting;
-import com.happyflights.search.strategy.sort.impl.NoOpFlightSorting;
 import com.happyflights.search.strategy.sort.impl.PriceFlightSorting;
 
 import java.util.Objects;
@@ -41,15 +39,12 @@ public class FlightSearchExecutorFactoryImpl implements FlightSearchExecutorFact
         switch (flightSearchCriteria.getSortCriteria()) {
             case PRICE -> builder.withFlightSortStrategy(new PriceFlightSorting());
             case LENGTH -> builder.withFlightSortStrategy(new LengthFlightSorting());
-            case null, default -> builder.withFlightSortStrategy(new NoOpFlightSorting());
         }
     }
 
     private static void addLimiter(FlightSearchCriteria flightSearchCriteria, FlightSearchExecutorBuilder builder) {
         if(!Objects.isNull(flightSearchCriteria.getMaxResults())) {
             builder.withFlightLimitingStrategy(new MaxResultLimiting(flightSearchCriteria.getMaxResults()));
-        } else {
-            builder.withFlightLimitingStrategy(new NoOpLimiting());
         }
     }
 }

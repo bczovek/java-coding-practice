@@ -1,11 +1,15 @@
 package com.happyflights.search.executor;
 
 import com.happyflights.search.strategy.filter.FlightFilteringStrategy;
+import com.happyflights.search.strategy.filter.impl.NoOpFlightFilter;
 import com.happyflights.search.strategy.limit.FlightLimitingStrategy;
+import com.happyflights.search.strategy.limit.impl.NoOpLimiting;
 import com.happyflights.search.strategy.sort.FlightSortStrategy;
+import com.happyflights.search.strategy.sort.impl.NoOpFlightSorting;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class FlightSearchExecutorBuilder {
 
@@ -33,6 +37,16 @@ public class FlightSearchExecutorBuilder {
     }
 
     public FlightSearchExecutor build() {
+        if(flightFilteringStrategies.isEmpty()) {
+            flightFilteringStrategies.add(new NoOpFlightFilter());
+        }
+        if(Objects.isNull(flightSortStrategy)) {
+            flightSortStrategy = new NoOpFlightSorting();
+        }
+        if(Objects.isNull(flightLimitingStrategy)) {
+            flightLimitingStrategy = new NoOpLimiting();
+        }
+
         return new FlightSearchExecutor(flightFilteringStrategies, flightSortStrategy, flightLimitingStrategy);
     }
 }

@@ -4,8 +4,13 @@ import lombok.Data;
 
 @Data
 public class LimitCriteria {
-    //TODO: Find better solution, preferably something similar to SortCriteria
+
     public static final int DEFAULT_LIMIT = 3;
 
     private int maxResults = DEFAULT_LIMIT;
+    private LimitType limitType;
+
+    public enum LimitType {
+        MAX_RESULT
+    }
 }

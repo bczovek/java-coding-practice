@@ -24,7 +24,7 @@ class NoOpFlightFilterTest {
     }
 
     @Test
-    public void testFilterWithEmptyCollectionShouldReturnEmptyCollection() {
+    void testFilterWithEmptyCollectionShouldReturnEmptyCollection() {
         Collection<FlightSummary> flights = Collections.emptyList();
 
         Collection<FlightSummary> result = underTest.filter(flights);
@@ -33,7 +33,7 @@ class NoOpFlightFilterTest {
     }
 
     @Test
-    public void testFilterWithSingleFlightShouldReturnSameFlight() {
+    void testFilterWithSingleFlightShouldReturnSameFlight() {
         FlightSummary flight = FlightSummary.builder().build();
         Collection<FlightSummary> flights = Collections.singletonList(flight);
 
@@ -43,7 +43,7 @@ class NoOpFlightFilterTest {
     }
 
     @Test
-    public void testFilterWithMultipleFlightsShouldReturnSameFlights() {
+    void testFilterWithMultipleFlightsShouldReturnSameFlights() {
         FlightSummary flight1 = FlightSummary.builder().build();
         FlightSummary flight2 = FlightSummary.builder().build();
         FlightSummary flight3 = FlightSummary.builder().build();
@@ -55,7 +55,7 @@ class NoOpFlightFilterTest {
     }
 
     @Test
-    public void testFilterWithNullInputShouldThrowException() {
+    void testFilterWithNullInputShouldThrowException() {
         // TODO
         assertThatNullPointerException().isThrownBy(() -> underTest.filter(null));
     }

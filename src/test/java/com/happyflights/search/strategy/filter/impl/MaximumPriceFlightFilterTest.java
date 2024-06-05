@@ -22,7 +22,7 @@ class MaximumPriceFlightFilterTest {
     }
 
     @Test
-    public void testFilterWithEmptyListShouldReturnEmptyCollection() {
+    void testFilterWithEmptyListShouldReturnEmptyCollection() {
         Collection<FlightSummary> flights = Collections.emptyList();
 
         Collection<FlightSummary> result = underTest.filter(flights);
@@ -31,7 +31,7 @@ class MaximumPriceFlightFilterTest {
     }
 
     @Test
-    public void testFilterWithSingleFlightBelowMaxPriceShouldReturnSameFlight() {
+    void testFilterWithSingleFlightBelowMaxPriceShouldReturnSameFlight() {
         FlightSummary flight = FlightSummary.builder().averagePriceInUsd(50.0F).build();
         Collection<FlightSummary> flights = Collections.singletonList(flight);
 
@@ -41,7 +41,7 @@ class MaximumPriceFlightFilterTest {
     }
 
     @Test
-    public void testFilterWithSingleFlightAboveMaxPriceShouldReturnEmptyCollection() {
+    void testFilterWithSingleFlightAboveMaxPriceShouldReturnEmptyCollection() {
         FlightSummary flight = FlightSummary.builder().averagePriceInUsd(150.0F).build();
         Collection<FlightSummary> flights = Collections.singletonList(flight);
 
@@ -51,7 +51,7 @@ class MaximumPriceFlightFilterTest {
     }
 
     @Test
-    public void testFilterWithMultipleFlightsMixedPricesShouldReturnFilteredCollection() {
+    void testFilterWithMultipleFlightsMixedPricesShouldReturnFilteredCollection() {
         FlightSummary flight1 = FlightSummary.builder().averagePriceInUsd(50.0F).build();
         FlightSummary flight2 = FlightSummary.builder().averagePriceInUsd(150.0F).build();
         FlightSummary flight3 = FlightSummary.builder().averagePriceInUsd(75.0F).build();
@@ -63,7 +63,7 @@ class MaximumPriceFlightFilterTest {
     }
 
     @Test
-    public void testFilterWithNullShouldThrowException() {
+    void testFilterWithNullShouldThrowException() {
         // TODO
         Collection<FlightSummary> result = underTest.filter(null);
 
@@ -71,7 +71,7 @@ class MaximumPriceFlightFilterTest {
     }
 
     @Test
-    public void testFilterWithNegativeMaxPriceShouldThrowException() {
+    void testFilterWithNegativeMaxPriceShouldThrowException() {
         // TODO: Throw exception when negative max result.
         underTest = new MaximumPriceFlightFilter(-10);
 

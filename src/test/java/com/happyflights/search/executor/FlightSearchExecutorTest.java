@@ -1,0 +1,67 @@
+package com.happyflights.search.executor;
+
+import com.happyflights.availability.FlightSummary;
+import com.happyflights.search.strategy.filter.FlightFilteringStrategy;
+import com.happyflights.search.strategy.limit.FlightLimitingStrategy;
+import com.happyflights.search.strategy.sort.FlightSortStrategy;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+class FlightSearchExecutorTest {
+
+    private FlightSearchExecutor underTest;
+    private FlightFilteringStrategy mockFilteringStrategy1;
+    private FlightFilteringStrategy mockFilteringStrategy2;
+    private FlightSortStrategy mockSortStrategy;
+    private FlightLimitingStrategy mockLimitingStrategy;
+
+    @BeforeEach
+    public void setUp() {
+        mockFilteringStrategy1 = Mockito.mock(FlightFilteringStrategy.class);
+        mockFilteringStrategy2 = Mockito.mock(FlightFilteringStrategy.class);
+        mockSortStrategy = Mockito.mock(FlightSortStrategy.class);
+        mockLimitingStrategy = Mockito.mock(FlightLimitingStrategy.class);
+
+        List<FlightFilteringStrategy> filteringStrategies = new ArrayList<>();
+        filteringStrategies.add(mockFilteringStrategy1);
+        filteringStrategies.add(mockFilteringStrategy2);
+
+        underTest = new FlightSearchExecutor(filteringStrategies, mockSortStrategy, mockLimitingStrategy);
+    }
+
+    @Test
+    public void testExecuteShouldCallFilterSortAndLimitStrategies() {
+        FlightSummary flight = FlightSummary.builder().build();
+        Collection<FlightSummary> flights = List.of(flight);
+
+        Mockito.when(mockFilteringStrategy1.filter(flights)).thenReturn(flights);
+        Mockito.when(mockFilteringStrategy2.filter(flights)).thenReturn(flights);
+        Mockito.when(mockSortStrategy.sort(flights)).thenReturn(flights);
+        Mockito.when(mockLimitingStrategy.limit(flights)).thenReturn(flights);
+
+        Collection<FlightSummary> result = underTest.execute(flights);
+
+        assertThat(result).containsExactly(flight);
+        Mockito.verify(mockFilteringStrategy1).filter(flights);
+        Mockito.verify(mockFilteringStrategy2).filter(flights);
+        Mockito.verify(mockSortStrategy).sort(flights);
+        Mockito.verify(mockLimitingStrategy).limit(flights);
+        Mockito.verifyNoMoreInteractions(mockFilteringStrategy1, mockFilteringStrategy2,
+                mockSortStrategy, mockLimitingStrategy);
+    }
+
+    @Test
+    public void testExecuteWithNullFlightSummariesShouldThrowNullPointerException() {
+        assertThatThrownBy(() -> underTest.execute(null))
+                .isInstanceOf(NullPointerException.class);
+    }
+
+}

@@ -9,6 +9,7 @@ import com.happyflights.search.executor.FlightSearchExecutor;
 import com.happyflights.search.executor.factory.FlightSearchExecutorFactory;
 import com.happyflights.search.model.FlightSearchCriteria;
 import com.happyflights.search.service.FlightSearchService;
+import lombok.NonNull;
 
 import java.util.Collection;
 
@@ -18,14 +19,16 @@ public class FlightSearchServiceImpl implements FlightSearchService {
     private final FlightSearchExecutorFactory flightSearchExecutorFactory;
     private final Converter<FlightSearchCriteria, FlightAvailabilityRequest> converter;
 
-    public FlightSearchServiceImpl(FlightAvailabilityService availabilityService, FlightSearchExecutorFactory flightSearchExecutorFactory, FlightSearchCriteriaToAvailabilityRequestConverter converter) {
+    public FlightSearchServiceImpl(@NonNull FlightAvailabilityService availabilityService,
+                                   @NonNull FlightSearchExecutorFactory flightSearchExecutorFactory,
+                                   @NonNull FlightSearchCriteriaToAvailabilityRequestConverter converter) {
         this.availabilityService = availabilityService;
         this.flightSearchExecutorFactory = flightSearchExecutorFactory;
         this.converter = converter;
     }
 
     @Override
-    public Collection<FlightSummary> search(FlightSearchCriteria flightSearchCriteria) {
+    public Collection<FlightSummary> search(@NonNull FlightSearchCriteria flightSearchCriteria) {
         Collection<FlightSummary> flightSummaries =
                 availabilityService.getAvailableFlights(converter.convert(flightSearchCriteria));
 

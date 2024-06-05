@@ -2,10 +2,12 @@ package com.happyflights.search.strategy.limit.impl;
 
 import com.happyflights.availability.FlightSummary;
 import com.happyflights.search.strategy.limit.FlightLimitingStrategy;
+import lombok.Getter;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+@Getter
 public class MaxResultLimiting implements FlightLimitingStrategy {
 
     public static final int DEFAULT_MAX_RESULT = 3;

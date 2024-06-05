@@ -2,7 +2,6 @@ package com.happyflights.search.strategy.filter.impl;
 
 import com.happyflights.availability.FlightSummary;
 import com.happyflights.search.strategy.filter.FlightFilteringStrategy;
-import lombok.NonNull;
 
 import java.util.Collection;
 import java.util.stream.Collectors;

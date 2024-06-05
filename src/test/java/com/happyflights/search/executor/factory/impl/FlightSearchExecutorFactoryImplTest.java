@@ -6,7 +6,7 @@ import com.happyflights.search.strategy.filter.impl.CancelableFlightFilter;
 import com.happyflights.search.strategy.filter.impl.MaximumPriceFlightFilter;
 import com.happyflights.search.strategy.filter.impl.NoOpFlightFilter;
 import com.happyflights.search.strategy.limit.FlightLimitingStrategy;
-import com.happyflights.search.strategy.limit.impl.MaxResultLimiting;
+import com.happyflights.search.strategy.limit.impl.MaxResultLimiter;
 import com.happyflights.search.strategy.sort.impl.LengthFlightSorter;
 import com.happyflights.search.strategy.sort.impl.NoOpFlightSorter;
 import com.happyflights.search.strategy.sort.impl.PriceFlightSorter;
@@ -35,8 +35,8 @@ class FlightSearchExecutorFactoryImplTest {
         assertThat(executor.getFlightFilteringStrategies().getFirst()).isInstanceOf(NoOpFlightFilter.class);
         assertThat(executor.getFlightSortingStrategy()).isInstanceOf(NoOpFlightSorter.class);
         FlightLimitingStrategy flightLimitingStrategy = executor.getFlightLimitingStrategy();
-        assertThat(flightLimitingStrategy).isInstanceOf(MaxResultLimiting.class);
-        assertThat(((MaxResultLimiting) flightLimitingStrategy).getMaxResult()).isEqualTo(3);
+        assertThat(flightLimitingStrategy).isInstanceOf(MaxResultLimiter.class);
+        assertThat(((MaxResultLimiter) flightLimitingStrategy).getMaxResult()).isEqualTo(3);
     }
 
     @Test
@@ -95,8 +95,8 @@ class FlightSearchExecutorFactoryImplTest {
         FlightSearchExecutor executor = underTest.createExecutor(criteria);
 
         FlightLimitingStrategy flightLimitingStrategy = executor.getFlightLimitingStrategy();
-        assertThat(flightLimitingStrategy).isInstanceOf(MaxResultLimiting.class);
-        assertThat(((MaxResultLimiting) flightLimitingStrategy).getMaxResult()).isEqualTo(customMaxResults);
+        assertThat(flightLimitingStrategy).isInstanceOf(MaxResultLimiter.class);
+        assertThat(((MaxResultLimiter) flightLimitingStrategy).getMaxResult()).isEqualTo(customMaxResults);
     }
 
     @Test

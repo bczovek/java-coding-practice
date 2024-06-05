@@ -6,7 +6,7 @@ import lombok.NonNull;
 
 import java.util.Collection;
 
-public class NoOpLimiting implements FlightLimitingStrategy {
+public class NoOpLimiter implements FlightLimitingStrategy {
     @Override
     public Collection<FlightSummary> limit(@NonNull Collection<FlightSummary> flights) {
         return flights;

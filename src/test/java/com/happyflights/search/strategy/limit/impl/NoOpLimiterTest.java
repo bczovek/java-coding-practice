@@ -11,13 +11,13 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 
-class NoOpLimitingTest {
+class NoOpLimiterTest {
 
-    private NoOpLimiting underTest;
+    private NoOpLimiter underTest;
 
     @BeforeEach
     void setUp() {
-        underTest = new NoOpLimiting();
+        underTest = new NoOpLimiter();
     }
 
     @Test

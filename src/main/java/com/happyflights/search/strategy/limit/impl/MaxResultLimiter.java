@@ -9,19 +9,19 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Getter
-public class MaxResultLimiting implements FlightLimitingStrategy {
+public class MaxResultLimiter implements FlightLimitingStrategy {
 
     public static final int DEFAULT_MAX_RESULT = 3;
     private final Integer maxResult;
 
-    public MaxResultLimiting(Integer maxResult) {
+    public MaxResultLimiter(Integer maxResult) {
         if (maxResult < 1) {
             throw new InvalidMaxResultLimitException(String.format("Number of maximum results has to be positive. Value provided: %d", maxResult));
         }
         this.maxResult = maxResult;
     }
 
-    public MaxResultLimiting() {
+    public MaxResultLimiter() {
         maxResult = DEFAULT_MAX_RESULT;
     }
 

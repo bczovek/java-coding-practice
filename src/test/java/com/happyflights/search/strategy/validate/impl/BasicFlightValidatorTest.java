@@ -15,13 +15,13 @@ import com.happyflights.search.strategy.validate.exception.NegativeFlightPriceEx
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class BasicFlightValidationTest {
+class BasicFlightValidatorTest {
 
-    private BasicFlightValidation underTest;
+    private BasicFlightValidator underTest;
 
     @BeforeEach
     void setUp() {
-        underTest = new BasicFlightValidation();
+        underTest = new BasicFlightValidator();
     }
 
     @Test

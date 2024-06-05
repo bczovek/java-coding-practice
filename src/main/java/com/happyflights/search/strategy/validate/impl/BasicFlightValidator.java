@@ -10,7 +10,7 @@ import com.happyflights.search.strategy.validate.exception.NegativeFlightPriceEx
 import com.happyflights.search.strategy.validate.FlightValidatingStrategy;
 import lombok.NonNull;
 
-public class BasicFlightValidation implements FlightValidatingStrategy {
+public class BasicFlightValidator implements FlightValidatingStrategy {
     @Override
     public void validate(@NonNull Collection<FlightSummary> flights) {
         flights.forEach(this::validatePrice);

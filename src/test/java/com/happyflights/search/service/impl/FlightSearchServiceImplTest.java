@@ -16,6 +16,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import static com.happyflights.search.constant.TestDate.DEPARTURE_DATE;
+import static com.happyflights.search.constant.TestDate.DEPARTURE_DATE_PLUS_TWO_HOURS;
 import static org.assertj.core.api.Assertions.*;
 
 class FlightSearchServiceImplTest {
@@ -39,16 +41,16 @@ class FlightSearchServiceImplTest {
         FlightSearchCriteria criteria = FlightSearchCriteria.builder()
                 .origin("NYC")
                 .destination("LAX")
-                .departureDate(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
+                .departureDate(Date.from(Instant.parse(DEPARTURE_DATE.getValue())))
                 .numberOfTravellers(2)
                 .build();
 
         FlightAvailabilityRequest availabilityRequest = new FlightAvailabilityRequest("NYC", "LAX",
-                Date.from(Instant.parse("2022-01-01T10:00:00Z")), 2);
+                Date.from(Instant.parse(DEPARTURE_DATE.getValue())), 2);
 
         FlightSummary flight = FlightSummary.builder()
-                .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
+                .departureTime(Date.from(Instant.parse(DEPARTURE_DATE.getValue())))
+                .arrivalTime(Date.from(Instant.parse(DEPARTURE_DATE_PLUS_TWO_HOURS.getValue())))
                 .averagePriceInUsd(100.0f)
                 .build();
 

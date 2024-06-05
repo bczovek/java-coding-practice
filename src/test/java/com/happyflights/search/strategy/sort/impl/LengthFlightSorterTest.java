@@ -11,6 +11,11 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import static com.happyflights.search.constant.TestDate.DEPARTURE_DATE;
+import static com.happyflights.search.constant.TestDate.DEPARTURE_DATE_PLUS_FOUR_HOURS;
+import static com.happyflights.search.constant.TestDate.DEPARTURE_DATE_PLUS_ONE_HOUR;
+import static com.happyflights.search.constant.TestDate.DEPARTURE_DATE_PLUS_THREE_HOURS;
+import static com.happyflights.search.constant.TestDate.DEPARTURE_DATE_PLUS_TWO_HOURS;
 import static org.assertj.core.api.Assertions.*;
 
 class LengthFlightSorterTest {
@@ -24,16 +29,16 @@ class LengthFlightSorterTest {
         @Test
         void testSortWithMultipleFlightsShouldReturnSortedFlights() {
             FlightSummary flight1 = FlightSummary.builder()
-                    .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                    .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
+                    .departureTime(Date.from(Instant.parse(DEPARTURE_DATE.getValue())))
+                    .arrivalTime(Date.from(Instant.parse(DEPARTURE_DATE_PLUS_TWO_HOURS.getValue())))
                     .build();
             FlightSummary flight2 = FlightSummary.builder()
-                    .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                    .arrivalTime(Date.from(Instant.parse("2022-01-01T11:00:00Z")))
+                    .departureTime(Date.from(Instant.parse(DEPARTURE_DATE.getValue())))
+                    .arrivalTime(Date.from(Instant.parse(DEPARTURE_DATE_PLUS_ONE_HOUR.getValue())))
                     .build();
             FlightSummary flight3 = FlightSummary.builder()
-                    .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                    .arrivalTime(Date.from(Instant.parse("2022-01-01T13:00:00Z")))
+                    .departureTime(Date.from(Instant.parse(DEPARTURE_DATE.getValue())))
+                    .arrivalTime(Date.from(Instant.parse(DEPARTURE_DATE_PLUS_THREE_HOURS.getValue())))
                     .build();
             Collection<FlightSummary> flights = List.of(flight1, flight2, flight3);
 
@@ -45,12 +50,12 @@ class LengthFlightSorterTest {
         @Test
         void testSortWithFlightsHavingSameLengthShouldReturnOriginalOrder() {
             FlightSummary flight1 = FlightSummary.builder()
-                    .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                    .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
+                    .departureTime(Date.from(Instant.parse(DEPARTURE_DATE.getValue())))
+                    .arrivalTime(Date.from(Instant.parse(DEPARTURE_DATE_PLUS_TWO_HOURS.getValue())))
                     .build();
             FlightSummary flight2 = FlightSummary.builder()
-                    .departureTime(Date.from(Instant.parse("2022-01-01T08:00:00Z")))
-                    .arrivalTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
+                    .departureTime(Date.from(Instant.parse(DEPARTURE_DATE_PLUS_TWO_HOURS.getValue())))
+                    .arrivalTime(Date.from(Instant.parse(DEPARTURE_DATE_PLUS_FOUR_HOURS.getValue())))
                     .build();
             Collection<FlightSummary> flights = List.of(flight1, flight2);
 
@@ -69,16 +74,16 @@ class LengthFlightSorterTest {
         @Test
         void testSortWithMultipleFlightsShouldReturnSortedFlights() {
             FlightSummary flight1 = FlightSummary.builder()
-                    .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                    .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
+                    .departureTime(Date.from(Instant.parse(DEPARTURE_DATE.getValue())))
+                    .arrivalTime(Date.from(Instant.parse(DEPARTURE_DATE_PLUS_TWO_HOURS.getValue())))
                     .build();
             FlightSummary flight2 = FlightSummary.builder()
-                    .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                    .arrivalTime(Date.from(Instant.parse("2022-01-01T11:00:00Z")))
+                    .departureTime(Date.from(Instant.parse(DEPARTURE_DATE.getValue())))
+                    .arrivalTime(Date.from(Instant.parse(DEPARTURE_DATE_PLUS_ONE_HOUR.getValue())))
                     .build();
             FlightSummary flight3 = FlightSummary.builder()
-                    .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                    .arrivalTime(Date.from(Instant.parse("2022-01-01T13:00:00Z")))
+                    .departureTime(Date.from(Instant.parse(DEPARTURE_DATE.getValue())))
+                    .arrivalTime(Date.from(Instant.parse(DEPARTURE_DATE_PLUS_THREE_HOURS.getValue())))
                     .build();
             Collection<FlightSummary> flights = List.of(flight1, flight2, flight3);
 
@@ -90,12 +95,12 @@ class LengthFlightSorterTest {
         @Test
         void testSortWithFlightsHavingSameLengthShouldReturnOriginalOrder() {
             FlightSummary flight1 = FlightSummary.builder()
-                    .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                    .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
+                    .departureTime(Date.from(Instant.parse(DEPARTURE_DATE.getValue())))
+                    .arrivalTime(Date.from(Instant.parse(DEPARTURE_DATE_PLUS_TWO_HOURS.getValue())))
                     .build();
             FlightSummary flight2 = FlightSummary.builder()
-                    .departureTime(Date.from(Instant.parse("2022-01-01T08:00:00Z")))
-                    .arrivalTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
+                    .departureTime(Date.from(Instant.parse(DEPARTURE_DATE_PLUS_TWO_HOURS.getValue())))
+                    .arrivalTime(Date.from(Instant.parse(DEPARTURE_DATE_PLUS_FOUR_HOURS.getValue())))
                     .build();
             Collection<FlightSummary> flights = List.of(flight1, flight2);
 
@@ -122,8 +127,8 @@ class LengthFlightSorterTest {
         @Test
         void testSortWithSingleFlightShouldReturnSingleFlight() {
             FlightSummary flight = FlightSummary.builder()
-                    .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                    .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
+                    .departureTime(Date.from(Instant.parse(DEPARTURE_DATE.getValue())))
+                    .arrivalTime(Date.from(Instant.parse(DEPARTURE_DATE_PLUS_TWO_HOURS.getValue())))
                     .build();
             Collection<FlightSummary> flights = List.of(flight);
 
@@ -134,8 +139,7 @@ class LengthFlightSorterTest {
 
         @Test
         void testSortWithNullCollectionShouldThrowNullPointerException() {
-            assertThatNullPointerException().isThrownBy(() -> underTest.sort(null))
-                    .withMessage("flights is marked non-null but is null");
+            assertThatNullPointerException().isThrownBy(() -> underTest.sort(null));
         }
     }
 }

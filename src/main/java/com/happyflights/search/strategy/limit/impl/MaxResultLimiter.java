@@ -16,7 +16,8 @@ public class MaxResultLimiter implements FlightLimitingStrategy {
 
     public MaxResultLimiter(Integer maxResult) {
         if (maxResult < 1) {
-            throw new InvalidMaxResultLimitException(String.format("Number of maximum results has to be positive. Value provided: %d", maxResult));
+            throw new InvalidMaxResultLimitException(String.format("Number of maximum results has to be positive. Value provided: %d",
+                    maxResult));
         }
         this.maxResult = maxResult;
     }

@@ -21,8 +21,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ An implementation of the {@link FlightSearchExecutorFactory} interface that creates a {@link FlightSearchExecutor} object based
+ on the provided {@link FlightSearchCriteria}.
+ This implementation uses the {@link FlightSearchExecutorBuilder} to build the {@link FlightSearchExecutor} with the appropriate strategies.
+ By default, if the search criteria do not specify any filtering, sorting, or limiting strategies, the following strategies are used:
+ <ul>
+ <li>Filtering: {@link NoOpFlightFilter}</li>
+ <li>Sorting: {@link NoOpFlightSorter}</li>
+ <li>Limiting: {@link MaxResultLimiter} with the default maximum result count (3)</li>
+ </ul>
+ If the search criteria specify any filtering, sorting, or limiting options, the corresponding strategies are used:
+ <ul>
+ <li>Filtering: {@link CancelableFlightFilter}, {@link MaximumPriceFlightFilter}</li>
+ <li>Sorting: {@link PriceFlightSorter}, {@link LengthFlightSorter}</li>
+ <li>Limiting: {@link MaxResultLimiter} with the specified maximum result count</li>
+ </ul>
+ */
 public class FlightSearchExecutorFactoryImpl implements FlightSearchExecutorFactory {
 
+    /**
+     Creates a {@link FlightSearchExecutor} object based on the provided {@link FlightSearchCriteria}.
+     @param flightSearchCriteria A {@link FlightSearchCriteria} object containing the search criteria for the flight search.
+     @return A {@link FlightSearchExecutor} object configured with the appropriate strategies based on the provided search criteria.
+     @throws NullPointerException if the flightSearchCriteria is null.
+     */
     @Override
     public FlightSearchExecutor createExecutor(@NonNull FlightSearchCriteria flightSearchCriteria) {
         FlightSearchExecutorBuilder builder = new FlightSearchExecutorBuilder();
@@ -37,6 +60,11 @@ public class FlightSearchExecutorFactoryImpl implements FlightSearchExecutorFact
                 .build();
     }
 
+    /**
+     Creates a list of {@link FlightFilteringStrategy} objects based on the provided {@link FlightSearchCriteria}.
+     @param flightSearchCriteria A {@link FlightSearchCriteria} object containing the search criteria for the flight search.
+     @return A list of {@link FlightFilteringStrategy} objects corresponding to the provided search criteria.
+     */
     private List<FlightFilteringStrategy> createFilters(FlightSearchCriteria flightSearchCriteria) {
         List<FlightFilteringStrategy> filters = new ArrayList<>();
         if (!Objects.isNull(flightSearchCriteria.getCancelable())) {
@@ -49,6 +77,11 @@ public class FlightSearchExecutorFactoryImpl implements FlightSearchExecutorFact
         return filters.isEmpty() ? List.of(new NoOpFlightFilter()) : filters;
     }
 
+    /**
+     Creates a {@link FlightSortingStrategy} object based on the provided {@link FlightSearchCriteria}.
+     @param flightSearchCriteria A {@link FlightSearchCriteria} object containing the search criteria for the flight search.
+     @return A {@link FlightSortingStrategy} object corresponding to the provided search criteria.
+     */
     private FlightSortingStrategy createSorter(FlightSearchCriteria flightSearchCriteria) {
         switch (flightSearchCriteria.getSortCriteria()) {
             case PRICE -> {
@@ -63,6 +96,11 @@ public class FlightSearchExecutorFactoryImpl implements FlightSearchExecutorFact
         }
     }
 
+    /**
+     Creates a {@link FlightLimitingStrategy} object based on the provided {@link FlightSearchCriteria}.
+     @param flightSearchCriteria A {@link FlightSearchCriteria} object containing the search criteria for the flight search.
+     @return A {@link FlightLimitingStrategy} object corresponding to the provided search criteria.
+     */
     private FlightLimitingStrategy createLimiter(FlightSearchCriteria flightSearchCriteria) {
         Integer maxResults = flightSearchCriteria.getMaxResults();
         return !Objects.isNull(maxResults) ? new MaxResultLimiter(maxResults) : new MaxResultLimiter();

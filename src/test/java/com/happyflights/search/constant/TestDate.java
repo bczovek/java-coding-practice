@@ -1,5 +1,8 @@
 package com.happyflights.search.constant;
 
+import lombok.Getter;
+
+@Getter
 public enum TestDate {
 
     DEPARTURE_DATE("2022-01-01T10:00:00Z"),
@@ -14,7 +17,4 @@ public enum TestDate {
         this.value = value;
     }
 
-    public String getValue() {
-        return value;
-    }
 }

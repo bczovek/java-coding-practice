@@ -5,20 +5,20 @@ import java.util.Collection;
 import java.util.Objects;
 
 import com.happyflights.availability.FlightSummary;
+import com.happyflights.search.strategy.validate.FlightValidatingStrategy;
 import com.happyflights.search.strategy.validate.exception.NegativeFlightDurationException;
 import com.happyflights.search.strategy.validate.exception.NegativeFlightPriceException;
-import com.happyflights.search.strategy.validate.FlightValidatingStrategy;
 import lombok.NonNull;
 
 /**
- A class that implements the {@link FlightValidatingStrategy} interface to provide basic validation for a collection
- of {@link FlightSummary} objects.
- This class performs the following validations:
- <ul>
- <li>Validates if the flight has a non-negative average price.</li>
- <li>Validates if the flight has non-null departure and arrival times.</li>
- <li>Validates if the flight has a non-negative duration.</li>
- </ul>
+ * A class that implements the {@link FlightValidatingStrategy} interface to provide basic validation for a collection
+ * of {@link FlightSummary} objects.
+ * This class performs the following validations:
+ * <ul>
+ * <li>Validates if the flight has a non-negative average price.</li>
+ * <li>Validates if the flight has non-null departure and arrival times.</li>
+ * <li>Validates if the flight has a non-negative duration.</li>
+ * </ul>
  */
 public class BasicFlightValidator implements FlightValidatingStrategy {
 

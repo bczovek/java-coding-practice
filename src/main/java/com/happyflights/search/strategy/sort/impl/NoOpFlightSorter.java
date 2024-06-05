@@ -7,18 +7,18 @@ import lombok.NonNull;
 import java.util.Collection;
 
 /**
- A class that implements the {@link FlightSortingStrategy} interface to return the input collection of {@link FlightSummary}
- objects without any sorting.
- This class can be used when no specific sorting is required, and the original order of the collection should be maintained.
+ * A class that implements the {@link FlightSortingStrategy} interface to return the input collection of {@link FlightSummary}
+ * objects without any sorting.
+ * This class can be used when no specific sorting is required, and the original order of the collection should be maintained.
  */
 public class NoOpFlightSorter implements FlightSortingStrategy {
 
     /**
-     Returns the input collection of {@link FlightSummary} objects without applying any sorting.
-
-     @param flights A non-null collection of {@link FlightSummary} objects.
-     @return The same input collection of {@link FlightSummary} objects without any modifications.
-     @throws NullPointerException if the flights collection is null.
+     * Returns the input collection of {@link FlightSummary} objects without applying any sorting.
+     *
+     * @param flights A non-null collection of {@link FlightSummary} objects.
+     * @return The same input collection of {@link FlightSummary} objects without any modifications.
+     * @throws NullPointerException if the flights collection is null.
      */
     @Override
     public Collection<FlightSummary> sort(@NonNull Collection<FlightSummary> flights) {

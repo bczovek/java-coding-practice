@@ -3,6 +3,7 @@ package com.happyflights.search.executor;
 import com.happyflights.search.strategy.filter.FlightFilteringStrategy;
 import com.happyflights.search.strategy.limit.FlightLimitingStrategy;
 import com.happyflights.search.strategy.sort.FlightSortStrategy;
+import com.happyflights.search.strategy.validate.FlightValidationStrategy;
 import lombok.NonNull;
 
 import java.util.ArrayList;
@@ -10,12 +11,18 @@ import java.util.List;
 
 public class FlightSearchExecutorBuilder {
 
+    private FlightValidationStrategy flightValidationStrategy;
     private final List<FlightFilteringStrategy> flightFilteringStrategies;
     private FlightSortStrategy flightSortStrategy;
     private FlightLimitingStrategy flightLimitingStrategy;
 
     public FlightSearchExecutorBuilder() {
         flightFilteringStrategies = new ArrayList<>();
+    }
+
+    public FlightSearchExecutorBuilder withValidationStrategy(@NonNull FlightValidationStrategy flightValidationStrategy) {
+        this.flightValidationStrategy = flightValidationStrategy;
+        return this;
     }
 
     public FlightSearchExecutorBuilder addFilteringStrategy(@NonNull FlightFilteringStrategy flightFilteringStrategy) {
@@ -34,6 +41,6 @@ public class FlightSearchExecutorBuilder {
     }
 
     public FlightSearchExecutor build() {
-        return new FlightSearchExecutor(flightFilteringStrategies, flightSortStrategy, flightLimitingStrategy);
+        return new FlightSearchExecutor(flightValidationStrategy, flightFilteringStrategies, flightSortStrategy, flightLimitingStrategy);
     }
 }

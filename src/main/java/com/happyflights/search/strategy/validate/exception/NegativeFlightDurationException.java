@@ -1,4 +1,4 @@
-package com.happyflights.search.strategy.sort.exception;
+package com.happyflights.search.strategy.validate.exception;
 
 public class NegativeFlightDurationException extends RuntimeException {
     public NegativeFlightDurationException(String message) {

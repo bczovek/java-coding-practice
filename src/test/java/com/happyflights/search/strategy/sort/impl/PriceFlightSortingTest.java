@@ -1,7 +1,7 @@
 package com.happyflights.search.strategy.sort.impl;
 
 import com.happyflights.availability.FlightSummary;
-import com.happyflights.search.strategy.sort.exception.NegativeFlightPriceException;
+import com.happyflights.search.strategy.validate.exception.NegativeFlightPriceException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

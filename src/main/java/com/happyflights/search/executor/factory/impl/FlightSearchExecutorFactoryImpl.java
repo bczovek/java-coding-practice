@@ -14,6 +14,7 @@ import com.happyflights.search.strategy.sort.FlightSortStrategy;
 import com.happyflights.search.strategy.sort.impl.LengthFlightSorting;
 import com.happyflights.search.strategy.sort.impl.NoOpFlightSorting;
 import com.happyflights.search.strategy.sort.impl.PriceFlightSorting;
+import com.happyflights.search.strategy.validate.impl.BasicFlightValidation;
 import lombok.NonNull;
 
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class FlightSearchExecutorFactoryImpl implements FlightSearchExecutorFact
     @Override
     public FlightSearchExecutor createExecutor(@NonNull FlightSearchCriteria flightSearchCriteria) {
         FlightSearchExecutorBuilder builder = new FlightSearchExecutorBuilder();
+
+        builder.withValidationStrategy(new BasicFlightValidation());
 
         createFilters(flightSearchCriteria)
                 .forEach(builder::addFilteringStrategy);

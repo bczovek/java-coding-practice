@@ -15,6 +15,7 @@ public class FlightSearchCriteriaToAvailabilityRequestConverter implements Conve
 
     /**
      Converts a {@link FlightSearchCriteria} object to a {@link FlightAvailabilityRequest} object.
+
      @param input A non-null {@link FlightSearchCriteria} object containing the search criteria for the flight search.
      @return A {@link FlightAvailabilityRequest} object containing the origin, destination, departure date,
      and number of travellers from the input {@link FlightSearchCriteria}.

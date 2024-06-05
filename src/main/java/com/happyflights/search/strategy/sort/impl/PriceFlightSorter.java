@@ -20,6 +20,7 @@ public class PriceFlightSorter implements FlightSortingStrategy {
 
     /**
      Constructs a {@link PriceFlightSorter} object with the specified sortOrder.
+
      @param sortOrder A {@link FlightSearchCriteria.SortOrder} enum value indicating the desired sorting order.
      */
     public PriceFlightSorter(FlightSearchCriteria.SortOrder sortOrder) {
@@ -35,6 +36,7 @@ public class PriceFlightSorter implements FlightSortingStrategy {
 
     /**
      Sorts a collection of {@link FlightSummary} objects based on their average price in the specified order.
+
      @param flights A non-null collection of {@link FlightSummary} objects to be sorted.
      @return A new collection of {@link FlightSummary} objects sorted based on their average price.
      @throws NullPointerException if the flights collection is null.
@@ -48,6 +50,7 @@ public class PriceFlightSorter implements FlightSortingStrategy {
 
     /**
      Returns a {@link Comparator} object that compares {@link FlightSummary} objects based on their average price in the specified order.
+
      @return A {@link Comparator} object for sorting {@link FlightSummary} objects based on their average price.
      */
     private Comparator<FlightSummary> getComparator() {

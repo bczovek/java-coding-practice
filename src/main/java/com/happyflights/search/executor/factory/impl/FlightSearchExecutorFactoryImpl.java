@@ -42,6 +42,7 @@ public class FlightSearchExecutorFactoryImpl implements FlightSearchExecutorFact
 
     /**
      Creates a {@link FlightSearchExecutor} object based on the provided {@link FlightSearchCriteria}.
+
      @param flightSearchCriteria A {@link FlightSearchCriteria} object containing the search criteria for the flight search.
      @return A {@link FlightSearchExecutor} object configured with the appropriate strategies based on the provided search criteria.
      @throws NullPointerException if the flightSearchCriteria is null.
@@ -62,6 +63,7 @@ public class FlightSearchExecutorFactoryImpl implements FlightSearchExecutorFact
 
     /**
      Creates a list of {@link FlightFilteringStrategy} objects based on the provided {@link FlightSearchCriteria}.
+
      @param flightSearchCriteria A {@link FlightSearchCriteria} object containing the search criteria for the flight search.
      @return A list of {@link FlightFilteringStrategy} objects corresponding to the provided search criteria.
      */
@@ -79,6 +81,7 @@ public class FlightSearchExecutorFactoryImpl implements FlightSearchExecutorFact
 
     /**
      Creates a {@link FlightSortingStrategy} object based on the provided {@link FlightSearchCriteria}.
+
      @param flightSearchCriteria A {@link FlightSearchCriteria} object containing the search criteria for the flight search.
      @return A {@link FlightSortingStrategy} object corresponding to the provided search criteria.
      */
@@ -98,6 +101,7 @@ public class FlightSearchExecutorFactoryImpl implements FlightSearchExecutorFact
 
     /**
      Creates a {@link FlightLimitingStrategy} object based on the provided {@link FlightSearchCriteria}.
+
      @param flightSearchCriteria A {@link FlightSearchCriteria} object containing the search criteria for the flight search.
      @return A {@link FlightLimitingStrategy} object corresponding to the provided search criteria.
      */

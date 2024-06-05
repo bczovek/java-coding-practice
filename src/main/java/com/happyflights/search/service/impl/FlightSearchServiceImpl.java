@@ -29,6 +29,7 @@ public class FlightSearchServiceImpl implements FlightSearchService {
     /**
      Constructs a {@link FlightSearchServiceImpl} object with the specified {@link FlightAvailabilityService},
      {@link FlightSearchExecutorFactory}, and {@link Converter}.
+
      @param availabilityService A {@link FlightAvailabilityService} object to fetch flight availability.
      @param flightSearchExecutorFactory A {@link FlightSearchExecutorFactory} object to
      create a {@link FlightSearchExecutor} with the appropriate strategies.
@@ -44,6 +45,7 @@ public class FlightSearchServiceImpl implements FlightSearchService {
 
     /**
      Searches for flights based on the provided {@link FlightSearchCriteria}, filters, sorts, and limits the results accordingly.
+
      @param flightSearchCriteria A {@link FlightSearchCriteria} object containing the search criteria for the flight search.
      @return A collection of {@link FlightSummary} objects that meet the specified search criteria.
      @throws NullPointerException if the flightSearchCriteria is null.

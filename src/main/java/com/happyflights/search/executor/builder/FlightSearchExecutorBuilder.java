@@ -30,6 +30,7 @@ public class FlightSearchExecutorBuilder {
 
     /**
      Sets the validating strategy for the {@link FlightSearchExecutor}.
+
      @param flightValidatingStrategy A {@link FlightValidatingStrategy} object to be used for validating flights.
      @return The current {@link FlightSearchExecutorBuilder} instance.
      @throws NullPointerException if the flightValidatingStrategy is null.
@@ -41,6 +42,7 @@ public class FlightSearchExecutorBuilder {
 
     /**
      Adds a filtering strategy to the list of flight filtering strategies for the {@link FlightSearchExecutor}.
+
      @param flightFilteringStrategy A {@link FlightFilteringStrategy} object to be added to the list of flight filtering strategies.
      @return The current {@link FlightSearchExecutorBuilder} instance.
      @throws NullPointerException if the flightFilteringStrategy is null.
@@ -51,8 +53,8 @@ public class FlightSearchExecutorBuilder {
     }
 
     /**
-
      Sets the sorting strategy for the {@link FlightSearchExecutor}.
+
      @param flightSortingStrategy A {@link FlightSortingStrategy} object to be used for sorting flights.
      @return The current {@link FlightSearchExecutorBuilder} instance.
      @throws NullPointerException if the flightSortingStrategy is null.
@@ -64,6 +66,7 @@ public class FlightSearchExecutorBuilder {
 
     /**
      Sets the limiting strategy for the {@link FlightSearchExecutor}.
+
      @param flightLimitingStrategy A {@link FlightLimitingStrategy} object to be used for limiting the number of flights in the result.
      @return The current {@link FlightSearchExecutorBuilder} instance.
      @throws NullPointerException if the flightLimitingStrategy is null.
@@ -75,6 +78,7 @@ public class FlightSearchExecutorBuilder {
 
     /**
      Builds and returns a new {@link FlightSearchExecutor} object with the specified strategies.
+
      @return A {@link FlightSearchExecutor} object with the specified strategies.
      */
     public FlightSearchExecutor build() {

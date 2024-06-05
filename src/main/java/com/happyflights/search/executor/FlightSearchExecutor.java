@@ -28,6 +28,7 @@ public class FlightSearchExecutor {
 
     /**
      Constructs a {@link FlightSearchExecutor} object with the specified strategies.
+
      @param flightValidatingStrategy A {@link FlightValidatingStrategy} object for validating flights.
      @param flightFilteringStrategies A list of {@link FlightFilteringStrategy} objects for filtering flights.
      @param flightSortingStrategy A {@link FlightSortingStrategy} object for sorting flights.
@@ -45,6 +46,7 @@ public class FlightSearchExecutor {
 
     /**
      Executes the flight search by applying the specified strategies to the input collection of {@link FlightSummary} objects.
+
      @param flightSummaries A non-null collection of {@link FlightSummary} objects to be processed.
      @return A new collection of {@link FlightSummary} objects after applying the specified strategies.
      @throws NullPointerException if the flightSummaries collection is null. */
@@ -62,6 +64,7 @@ public class FlightSearchExecutor {
 
     /**
      Returns an unmodifiable list of flight filtering strategies.
+
      @return An unmodifiable list of {@link FlightFilteringStrategy} objects.
      */
     public List<FlightFilteringStrategy> getFlightFilteringStrategies() {

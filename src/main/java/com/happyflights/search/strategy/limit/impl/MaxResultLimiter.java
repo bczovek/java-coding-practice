@@ -21,6 +21,7 @@ public class MaxResultLimiter implements FlightLimitingStrategy {
 
     /**
      Constructs a {@link MaxResultLimiter} object with the specified maximum result count.
+
      @param maxResult An integer value representing the maximum number of results to be included in the limited collection.
      @throws InvalidMaxResultLimitException if the provided maxResult is less than 1.
      */
@@ -41,9 +42,10 @@ public class MaxResultLimiter implements FlightLimitingStrategy {
 
     /**
      Limits the input collection of {@link FlightSummary} objects based on the specified maximum result count.
+
      @param flights A non-null collection of {@link FlightSummary} objects.
      @return A new collection of {@link FlightSummary} objects with the size limited to the specified maximum result count.
-     @throws NullPointerException if the flights collection is null. 
+     @throws NullPointerException if the flights collection is null.
      */
     @Override
     public Collection<FlightSummary> limit(Collection<FlightSummary> flights) {

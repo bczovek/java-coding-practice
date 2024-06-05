@@ -18,6 +18,7 @@ public class MaximumPriceFlightFilter implements FlightFilteringStrategy {
 
     /**
      Constructs a {@link MaximumPriceFlightFilter} object with the specified maximum price.
+
      @param maximumPrice A float value representing the maximum price for a flight to be included in the filtered collection.
      @throws InvalidMaximumPriceException if the provided maximumPrice is less than 1.0.
      */
@@ -30,6 +31,7 @@ public class MaximumPriceFlightFilter implements FlightFilteringStrategy {
 
     /**
      Filters a collection of {@link FlightSummary} objects based on the specified maximum price.
+
      @param flights A non-null collection of {@link FlightSummary} objects to be filtered.
      @return A new collection of {@link FlightSummary} objects with average prices less than the specified maximum price.
      @throws NullPointerException if the flights collection is null.

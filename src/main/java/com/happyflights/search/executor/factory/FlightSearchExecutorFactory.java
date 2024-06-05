@@ -11,6 +11,7 @@ import com.happyflights.search.model.FlightSearchCriteria;
 public interface FlightSearchExecutorFactory {
     /**
      Creates a {@link FlightSearchExecutor} object based on the provided {@link FlightSearchCriteria}.
+
      @param flightSearchCriteria A {@link FlightSearchCriteria} object containing the search criteria for the flight search.
      @return A {@link FlightSearchExecutor} object configured with the appropriate strategies based on the provided search criteria.
      */

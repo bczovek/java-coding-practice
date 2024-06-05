@@ -21,6 +21,7 @@ public class LengthFlightSorter implements FlightSortingStrategy {
 
     /**
      Constructs a {@link LengthFlightSorter} object with the specified sortOrder.
+
      @param sortOrder A {@link FlightSearchCriteria.SortOrder} enum value indicating the desired sorting order.
      */
     public LengthFlightSorter(FlightSearchCriteria.SortOrder sortOrder) {
@@ -36,6 +37,7 @@ public class LengthFlightSorter implements FlightSortingStrategy {
 
     /**
      Sorts a collection of {@link FlightSummary} objects based on their flight length (duration) in the specified order.
+
      @param flights A non-null collection of {@link FlightSummary} objects to be sorted.
      @return A new collection of {@link FlightSummary} objects sorted based on their flight length.
      @throws NullPointerException if the flights collection is null.
@@ -50,6 +52,7 @@ public class LengthFlightSorter implements FlightSortingStrategy {
     /**
      Returns a {@link Comparator} object that compares {@link FlightSummary} objects based on their flight length (duration)
      in the specified order.
+
      @return A {@link Comparator} object for sorting {@link FlightSummary} objects based on their flight length.
      */
     private Comparator<FlightSummary> getComparator() {
@@ -59,6 +62,7 @@ public class LengthFlightSorter implements FlightSortingStrategy {
 
     /**
      Calculates the flight length (duration) of the given {@link FlightSummary} object.
+
      @param flight A {@link FlightSummary} object whose flight length needs to be calculated.
      @return A {@link Duration} object representing the flight length of the given flight.
      */

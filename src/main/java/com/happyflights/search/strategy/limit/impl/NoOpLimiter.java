@@ -15,6 +15,7 @@ public class NoOpLimiter implements FlightLimitingStrategy {
 
     /**
      Returns the input collection of {@link FlightSummary} objects without applying any limiting.
+
      @param flights A non-null collection of {@link FlightSummary} objects.
      @return The same input collection of {@link FlightSummary} objects without any modifications.
      @throws NullPointerException if the flights collection is null.

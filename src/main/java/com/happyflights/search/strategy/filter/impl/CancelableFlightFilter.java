@@ -19,6 +19,7 @@ public class CancelableFlightFilter implements FlightFilteringStrategy {
 
     /**
      Constructs a {@link CancelableFlightFilter} object with the specified cancel criteria.
+
      @param cancelCriteria A {@link FlightSearchCriteria.CancelCriteria} enum value indicating the desired cancellability filter criteria.
      @throws NullPointerException if the cancelCriteria is null.
      */
@@ -28,6 +29,7 @@ public class CancelableFlightFilter implements FlightFilteringStrategy {
 
     /**
      Filters a collection of {@link FlightSummary} objects based on the specified cancellability criteria.
+
      @param flights A non-null collection of {@link FlightSummary} objects to be filtered.
      @return A new collection of {@link FlightSummary} objects that meet the specified cancellability criteria.
      @throws NullPointerException if the flights collection is null.
@@ -41,6 +43,7 @@ public class CancelableFlightFilter implements FlightFilteringStrategy {
 
     /**
      Determines if the given {@link FlightSummary} object meets the specified cancellability criteria.
+
      @param flight A {@link FlightSummary} object to be evaluated.
      @return A boolean value indicating whether the flight meets the specified cancellability criteria.
      @throws NullPointerException if the flight is null.

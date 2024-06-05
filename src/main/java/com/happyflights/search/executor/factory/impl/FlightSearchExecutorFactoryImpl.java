@@ -52,10 +52,10 @@ public class FlightSearchExecutorFactoryImpl implements FlightSearchExecutorFact
     private FlightSortingStrategy createSorter(FlightSearchCriteria flightSearchCriteria) {
         switch (flightSearchCriteria.getSortCriteria()) {
             case PRICE -> {
-                return new PriceFlightSorter();
+                return new PriceFlightSorter(flightSearchCriteria.getSortOrder());
             }
             case LENGTH -> {
-                return new LengthFlightSorter();
+                return new LengthFlightSorter(flightSearchCriteria.getSortOrder());
             }
             case null, default -> {
                 return new NoOpFlightSorter();

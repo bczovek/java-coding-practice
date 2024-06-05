@@ -1,7 +1,9 @@
 package com.happyflights.search.strategy.sort.impl;
 
 import com.happyflights.availability.FlightSummary;
-import org.junit.jupiter.api.BeforeEach;
+import com.happyflights.search.model.FlightSearchCriteria;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
@@ -13,76 +15,127 @@ import static org.assertj.core.api.Assertions.*;
 
 class LengthFlightSorterTest {
 
-    private LengthFlightSorter underTest;
+    @Nested
+    @DisplayName("Test cases for ascending sorting")
+    class AscendingOrderTests {
 
-    @BeforeEach
-    void setUp() {
-        underTest = new LengthFlightSorter();
+        private final LengthFlightSorter underTest = new LengthFlightSorter(FlightSearchCriteria.SortOrder.ASCENDING);
+
+        @Test
+        void testSortWithMultipleFlightsShouldReturnSortedFlights() {
+            FlightSummary flight1 = FlightSummary.builder()
+                    .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
+                    .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
+                    .build();
+            FlightSummary flight2 = FlightSummary.builder()
+                    .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
+                    .arrivalTime(Date.from(Instant.parse("2022-01-01T11:00:00Z")))
+                    .build();
+            FlightSummary flight3 = FlightSummary.builder()
+                    .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
+                    .arrivalTime(Date.from(Instant.parse("2022-01-01T13:00:00Z")))
+                    .build();
+            Collection<FlightSummary> flights = List.of(flight1, flight2, flight3);
+
+            Collection<FlightSummary> result = underTest.sort(flights);
+
+            assertThat(result).containsExactly(flight2, flight1, flight3);
+        }
+
+        @Test
+        void testSortWithFlightsHavingSameLengthShouldReturnOriginalOrder() {
+            FlightSummary flight1 = FlightSummary.builder()
+                    .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
+                    .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
+                    .build();
+            FlightSummary flight2 = FlightSummary.builder()
+                    .departureTime(Date.from(Instant.parse("2022-01-01T08:00:00Z")))
+                    .arrivalTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
+                    .build();
+            Collection<FlightSummary> flights = List.of(flight1, flight2);
+
+            Collection<FlightSummary> result = underTest.sort(flights);
+
+            assertThat(result).containsExactly(flight1, flight2);
+        }
     }
 
-    @Test
-    void testSortWithEmptyCollectionShouldReturnEmptyCollection() {
-        Collection<FlightSummary> flights = List.of();
+    @Nested
+    @DisplayName("Test cases for descending sorting")
+    class DescendingOrderTests {
 
-        Collection<FlightSummary> result = underTest.sort(flights);
+        private final LengthFlightSorter underTest = new LengthFlightSorter(FlightSearchCriteria.SortOrder.DESCENDING);
 
-        assertThat(result).isEmpty();
+        @Test
+        void testSortWithMultipleFlightsShouldReturnSortedFlights() {
+            FlightSummary flight1 = FlightSummary.builder()
+                    .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
+                    .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
+                    .build();
+            FlightSummary flight2 = FlightSummary.builder()
+                    .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
+                    .arrivalTime(Date.from(Instant.parse("2022-01-01T11:00:00Z")))
+                    .build();
+            FlightSummary flight3 = FlightSummary.builder()
+                    .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
+                    .arrivalTime(Date.from(Instant.parse("2022-01-01T13:00:00Z")))
+                    .build();
+            Collection<FlightSummary> flights = List.of(flight1, flight2, flight3);
+
+            Collection<FlightSummary> result = underTest.sort(flights);
+
+            assertThat(result).containsExactly(flight3, flight1, flight2);
+        }
+
+        @Test
+        void testSortWithFlightsHavingSameLengthShouldReturnOriginalOrder() {
+            FlightSummary flight1 = FlightSummary.builder()
+                    .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
+                    .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
+                    .build();
+            FlightSummary flight2 = FlightSummary.builder()
+                    .departureTime(Date.from(Instant.parse("2022-01-01T08:00:00Z")))
+                    .arrivalTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
+                    .build();
+            Collection<FlightSummary> flights = List.of(flight1, flight2);
+
+            Collection<FlightSummary> result = underTest.sort(flights);
+
+            assertThat(result).containsExactly(flight1, flight2);
+        }
     }
 
-    @Test
-    void testSortWithSingleFlightShouldReturnSingleFlight() {
-        FlightSummary flight = FlightSummary.builder()
-                .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
-                .build();
-        Collection<FlightSummary> flights = List.of(flight);
+    @Nested
+    @DisplayName("Common test cases")
+    class CommonTestCases {
+        private final LengthFlightSorter underTest = new LengthFlightSorter();
 
-        Collection<FlightSummary> result = underTest.sort(flights);
+        @Test
+        void testSortWithEmptyCollectionShouldReturnEmptyCollection() {
+            Collection<FlightSummary> flights = List.of();
 
-        assertThat(result).containsExactly(flight);
-    }
+            Collection<FlightSummary> result = underTest.sort(flights);
 
-    @Test
-    void testSortWithMultipleFlightsShouldReturnSortedFlights() {
-        FlightSummary flight1 = FlightSummary.builder()
-                .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
-                .build();
-        FlightSummary flight2 = FlightSummary.builder()
-                .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                .arrivalTime(Date.from(Instant.parse("2022-01-01T11:00:00Z")))
-                .build();
-        FlightSummary flight3 = FlightSummary.builder()
-                .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                .arrivalTime(Date.from(Instant.parse("2022-01-01T13:00:00Z")))
-                .build();
-        Collection<FlightSummary> flights = List.of(flight1, flight2, flight3);
+            assertThat(result).isEmpty();
+        }
 
-        Collection<FlightSummary> result = underTest.sort(flights);
+        @Test
+        void testSortWithSingleFlightShouldReturnSingleFlight() {
+            FlightSummary flight = FlightSummary.builder()
+                    .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
+                    .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
+                    .build();
+            Collection<FlightSummary> flights = List.of(flight);
 
-        assertThat(result).containsExactly(flight2, flight1, flight3);
-    }
+            Collection<FlightSummary> result = underTest.sort(flights);
 
-    @Test
-    void testSortWithFlightsHavingSameLengthShouldReturnOriginalOrder() {
-        FlightSummary flight1 = FlightSummary.builder()
-                .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
-                .build();
-        FlightSummary flight2 = FlightSummary.builder()
-                .departureTime(Date.from(Instant.parse("2022-01-01T08:00:00Z")))
-                .arrivalTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                .build();
-        Collection<FlightSummary> flights = List.of(flight1, flight2);
+            assertThat(result).containsExactly(flight);
+        }
 
-        Collection<FlightSummary> result = underTest.sort(flights);
-
-        assertThat(result).containsExactly(flight1, flight2);
-    }
-
-    @Test
-    void testSortWithNullCollectionShouldThrowNullPointerException() {
-        assertThatNullPointerException().isThrownBy(() -> underTest.sort(null))
-                .withMessage("flights is marked non-null but is null");
+        @Test
+        void testSortWithNullCollectionShouldThrowNullPointerException() {
+            assertThatNullPointerException().isThrownBy(() -> underTest.sort(null))
+                    .withMessage("flights is marked non-null but is null");
+        }
     }
 }

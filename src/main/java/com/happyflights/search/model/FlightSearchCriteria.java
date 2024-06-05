@@ -24,6 +24,7 @@ public class FlightSearchCriteria {
     private CancelCriteria cancelable;
     private Float maxPrice;
     private SortCriteria sortCriteria;
+    private SortOrder sortOrder;
     private Integer maxResults;
 
     public enum CancelCriteria {
@@ -33,5 +34,9 @@ public class FlightSearchCriteria {
     public enum SortCriteria {
         PRICE, LENGTH
 
+    }
+
+    public enum SortOrder {
+        ASCENDING, DESCENDING
     }
 }

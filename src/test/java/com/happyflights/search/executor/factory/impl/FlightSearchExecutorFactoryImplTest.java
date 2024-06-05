@@ -43,7 +43,7 @@ class FlightSearchExecutorFactoryImplTest {
     @Test
     void testCreateExecutorWithCancelableCriteriaShouldReturnCancelableFilter() {
         FlightSearchCriteria criteria = FlightSearchCriteria.builder()
-                .cancellable(FlightSearchCriteria.CancelCriteria.BOTH)
+                .cancelable(FlightSearchCriteria.CancelCriteria.BOTH)
                 .build();
 
         FlightSearchExecutor executor = underTest.createExecutor(criteria);

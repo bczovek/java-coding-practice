@@ -7,5 +7,4 @@ import java.util.Collection;
 public interface FlightSortingStrategy {
 
     Collection<FlightSummary> sort(Collection<FlightSummary> flights);
-
 }

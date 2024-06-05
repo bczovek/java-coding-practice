@@ -19,8 +19,8 @@ class CancelableFlightFilterTest {
     private final FlightSummary nonCancelableFlight = FlightSummary.builder().cancellationPossible(false).build();
 
     @Nested
-    @DisplayName("Tests for CANCELABLE criteria")
-    class CancelableCriteriaTests {
+    @DisplayName("Test cases for CANCELABLE criteria")
+    class CancelableCriteriaTestCases {
 
         private final CancelableFlightFilter underTest =
                 new CancelableFlightFilter(FlightSearchCriteria.CancelCriteria.CANCELABLE);
@@ -43,7 +43,7 @@ class CancelableFlightFilterTest {
 
         @Test
         void testFilterWithMultipleFlightsMixedCancelableShouldReturnFilteredCollection() {
-            Collection<FlightSummary> flights = List.of(nonCancelableFlight ,cancelableFlight, nonCancelableFlight);
+            Collection<FlightSummary> flights = List.of(nonCancelableFlight, cancelableFlight, nonCancelableFlight);
             Collection<FlightSummary> result = underTest.filter(flights);
 
             assertThat(result).hasSize(1).containsExactly(cancelableFlight);
@@ -51,8 +51,8 @@ class CancelableFlightFilterTest {
     }
 
     @Nested
-    @DisplayName("Tests for NON_CANCELABLE criteria")
-    class NonCancelableCriteriaTests {
+    @DisplayName("Test cases for NON_CANCELABLE criteria")
+    class NonCancelableCriteriaTestCases {
 
         private final CancelableFlightFilter underTest =
                 new CancelableFlightFilter(FlightSearchCriteria.CancelCriteria.NON_CANCELABLE);
@@ -80,33 +80,35 @@ class CancelableFlightFilterTest {
     }
 
     @Nested
-    @DisplayName("Tests for BOTH criteria")
-    class BothCriteriaTests {
+    @DisplayName("Test cases for BOTH criteria")
+    class BothCriteriaTestCases {
         private final CancelableFlightFilter underTest =
                 new CancelableFlightFilter(FlightSearchCriteria.CancelCriteria.BOTH);
 
         @Test
         void testFilterWithMultipleFlightsMixedCancelableShouldReturnAllFlights() {
-            Collection<FlightSummary> flights = List.of(cancelableFlight, nonCancelableFlight);
+            Collection<FlightSummary> flights = List.of(cancelableFlight, nonCancelableFlight, cancelableFlight);
             Collection<FlightSummary> result = underTest.filter(flights);
-            assertThat(result).hasSize(2).containsExactlyElementsOf(flights);
+            assertThat(result).hasSize(3).containsExactlyElementsOf(flights);
         }
     }
 
-    @Test
-    void testFilterWithNullShouldThrowNullPointerException() {
+    @Nested
+    @DisplayName("Common test cases")
+    class CommonTestCases {
         CancelableFlightFilter underTest = new CancelableFlightFilter(FlightSearchCriteria.CancelCriteria.BOTH);
 
-        assertThatNullPointerException().isThrownBy(() -> underTest.filter(null))
-                .withMessage("flights is marked non-null but is null");
-    }
+        @Test
+        void testFilterWithNullShouldThrowNullPointerException() {
+            assertThatNullPointerException().isThrownBy(() -> underTest.filter(null))
+                    .withMessage("flights is marked non-null but is null");
+        }
 
-    @Test
-    void testFilterWithEmptyCollectionShouldReturnEmptyCollection() {
-        CancelableFlightFilter underTest = new CancelableFlightFilter(FlightSearchCriteria.CancelCriteria.BOTH);
-
-        Collection<FlightSummary> flights = Collections.emptyList();
-        Collection<FlightSummary> result = underTest.filter(flights);
-        assertThat(result).isEmpty();
+        @Test
+        void testFilterWithEmptyCollectionShouldReturnEmptyCollection() {
+            Collection<FlightSummary> flights = Collections.emptyList();
+            Collection<FlightSummary> result = underTest.filter(flights);
+            assertThat(result).isEmpty();
+        }
     }
 }

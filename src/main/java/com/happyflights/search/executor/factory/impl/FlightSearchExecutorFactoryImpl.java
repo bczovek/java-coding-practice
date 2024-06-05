@@ -43,8 +43,8 @@ public class FlightSearchExecutorFactoryImpl implements FlightSearchExecutorFact
     }
 
     private static void addLimiter(FlightSearchCriteria flightSearchCriteria, FlightSearchExecutorBuilder builder) {
-        if(!Objects.isNull(flightSearchCriteria.getMaxResults())) {
-            builder.withFlightLimitingStrategy(new MaxResultLimiting(flightSearchCriteria.getMaxResults()));
-        }
+        Integer maxResults = flightSearchCriteria.getMaxResults();
+        builder.withFlightLimitingStrategy(!Objects.isNull(maxResults) ?
+                new MaxResultLimiting(maxResults) : new MaxResultLimiting());
     }
 }

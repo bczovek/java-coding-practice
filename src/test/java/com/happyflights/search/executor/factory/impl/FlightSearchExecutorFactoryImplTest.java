@@ -24,6 +24,7 @@ class FlightSearchExecutorFactoryImplTest {
         underTest = new FlightSearchExecutorFactoryImpl();
     }
 
+    //TODO validation
     @Test
     void testCreateExecutorWithNoCriteriaShouldReturnNoOpStrategies() {
         FlightSearchCriteria criteria = FlightSearchCriteria.builder().build();

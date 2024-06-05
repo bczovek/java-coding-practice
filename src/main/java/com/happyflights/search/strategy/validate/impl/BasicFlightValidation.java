@@ -7,10 +7,10 @@ import java.util.Objects;
 import com.happyflights.availability.FlightSummary;
 import com.happyflights.search.strategy.validate.exception.NegativeFlightDurationException;
 import com.happyflights.search.strategy.validate.exception.NegativeFlightPriceException;
-import com.happyflights.search.strategy.validate.FlightValidationStrategy;
+import com.happyflights.search.strategy.validate.FlightValidatingStrategy;
 import lombok.NonNull;
 
-public class BasicFlightValidation implements FlightValidationStrategy {
+public class BasicFlightValidation implements FlightValidatingStrategy {
     @Override
     public void validate(@NonNull Collection<FlightSummary> flights) {
         flights.forEach(this::validatePrice);

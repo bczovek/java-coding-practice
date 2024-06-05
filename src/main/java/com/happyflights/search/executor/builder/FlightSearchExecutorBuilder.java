@@ -4,7 +4,7 @@ import com.happyflights.search.executor.FlightSearchExecutor;
 import com.happyflights.search.strategy.filter.FlightFilteringStrategy;
 import com.happyflights.search.strategy.limit.FlightLimitingStrategy;
 import com.happyflights.search.strategy.sort.FlightSortStrategy;
-import com.happyflights.search.strategy.validate.FlightValidationStrategy;
+import com.happyflights.search.strategy.validate.FlightValidatingStrategy;
 import lombok.NonNull;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class FlightSearchExecutorBuilder {
 
-    private FlightValidationStrategy flightValidationStrategy;
+    private FlightValidatingStrategy flightValidatingStrategy;
     private final List<FlightFilteringStrategy> flightFilteringStrategies;
     private FlightSortStrategy flightSortStrategy;
     private FlightLimitingStrategy flightLimitingStrategy;
@@ -21,8 +21,8 @@ public class FlightSearchExecutorBuilder {
         flightFilteringStrategies = new ArrayList<>();
     }
 
-    public FlightSearchExecutorBuilder withValidationStrategy(@NonNull FlightValidationStrategy flightValidationStrategy) {
-        this.flightValidationStrategy = flightValidationStrategy;
+    public FlightSearchExecutorBuilder withValidatingStrategy(@NonNull FlightValidatingStrategy flightValidatingStrategy) {
+        this.flightValidatingStrategy = flightValidatingStrategy;
         return this;
     }
 
@@ -42,6 +42,6 @@ public class FlightSearchExecutorBuilder {
     }
 
     public FlightSearchExecutor build() {
-        return new FlightSearchExecutor(flightValidationStrategy, flightFilteringStrategies, flightSortStrategy, flightLimitingStrategy);
+        return new FlightSearchExecutor(flightValidatingStrategy, flightFilteringStrategies, flightSortStrategy, flightLimitingStrategy);
     }
 }

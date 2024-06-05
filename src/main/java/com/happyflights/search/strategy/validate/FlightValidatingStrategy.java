@@ -5,7 +5,7 @@ import java.util.Collection;
 import com.happyflights.availability.FlightSummary;
 import lombok.NonNull;
 
-public interface FlightValidationStrategy {
+public interface FlightValidatingStrategy {
 
     void validate(@NonNull Collection<FlightSummary> flights);
 }

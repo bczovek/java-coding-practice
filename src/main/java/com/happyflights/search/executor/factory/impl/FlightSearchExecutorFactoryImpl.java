@@ -27,7 +27,7 @@ public class FlightSearchExecutorFactoryImpl implements FlightSearchExecutorFact
     public FlightSearchExecutor createExecutor(@NonNull FlightSearchCriteria flightSearchCriteria) {
         FlightSearchExecutorBuilder builder = new FlightSearchExecutorBuilder();
 
-        builder.withValidationStrategy(new BasicFlightValidation());
+        builder.withValidatingStrategy(new BasicFlightValidation());
 
         createFilters(flightSearchCriteria)
                 .forEach(builder::addFilteringStrategy);

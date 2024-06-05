@@ -4,7 +4,7 @@ import com.happyflights.availability.FlightSummary;
 import com.happyflights.search.strategy.filter.FlightFilteringStrategy;
 import com.happyflights.search.strategy.limit.FlightLimitingStrategy;
 import com.happyflights.search.strategy.sort.FlightSortStrategy;
-import com.happyflights.search.strategy.validate.FlightValidationStrategy;
+import com.happyflights.search.strategy.validate.FlightValidatingStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -21,7 +21,7 @@ class FlightSearchExecutorTest {
 
     private FlightSearchExecutor underTest;
     @Mock
-    private FlightValidationStrategy mockValidationStrategy;
+    private FlightValidatingStrategy mockValidatingStrategy;
     @Mock
     private FlightFilteringStrategy mockFilteringStrategy1;
     @Mock
@@ -38,7 +38,7 @@ class FlightSearchExecutorTest {
         filteringStrategies.add(mockFilteringStrategy1);
         filteringStrategies.add(mockFilteringStrategy2);
 
-        underTest = new FlightSearchExecutor(mockValidationStrategy, filteringStrategies, mockSortStrategy, mockLimitingStrategy);
+        underTest = new FlightSearchExecutor(mockValidatingStrategy, filteringStrategies, mockSortStrategy, mockLimitingStrategy);
     }
 
     @Test
@@ -54,12 +54,12 @@ class FlightSearchExecutorTest {
         Collection<FlightSummary> result = underTest.execute(flights);
 
         assertThat(result).containsExactly(flight);
-        Mockito.verify(mockValidationStrategy).validate(flights);
+        Mockito.verify(mockValidatingStrategy).validate(flights);
         Mockito.verify(mockFilteringStrategy1).filter(flights);
         Mockito.verify(mockFilteringStrategy2).filter(flights);
         Mockito.verify(mockSortStrategy).sort(flights);
         Mockito.verify(mockLimitingStrategy).limit(flights);
-        Mockito.verifyNoMoreInteractions(mockValidationStrategy, mockFilteringStrategy1, mockFilteringStrategy2,
+        Mockito.verifyNoMoreInteractions(mockValidatingStrategy, mockFilteringStrategy1, mockFilteringStrategy2,
                 mockSortStrategy, mockLimitingStrategy);
     }
 

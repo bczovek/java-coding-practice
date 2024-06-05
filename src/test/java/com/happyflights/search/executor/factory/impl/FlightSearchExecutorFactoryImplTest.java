@@ -10,6 +10,7 @@ import com.happyflights.search.strategy.limit.impl.MaxResultLimiter;
 import com.happyflights.search.strategy.sort.impl.LengthFlightSorter;
 import com.happyflights.search.strategy.sort.impl.NoOpFlightSorter;
 import com.happyflights.search.strategy.sort.impl.PriceFlightSorter;
+import com.happyflights.search.strategy.validate.impl.BasicFlightValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,13 +25,13 @@ class FlightSearchExecutorFactoryImplTest {
         underTest = new FlightSearchExecutorFactoryImpl();
     }
 
-    //TODO validation
     @Test
-    void testCreateExecutorWithNoCriteriaShouldReturnNoOpStrategies() {
+    void testCreateExecutorWithNoCriteriaShouldReturnDefaultStrategies() {
         FlightSearchCriteria criteria = FlightSearchCriteria.builder().build();
 
         FlightSearchExecutor executor = underTest.createExecutor(criteria);
 
+        assertThat(executor.getFlightValidatingStrategy()).isInstanceOf(BasicFlightValidator.class);
         assertThat(executor.getFlightFilteringStrategies()).hasSize(1);
         assertThat(executor.getFlightFilteringStrategies().getFirst()).isInstanceOf(NoOpFlightFilter.class);
         assertThat(executor.getFlightSortingStrategy()).isInstanceOf(NoOpFlightSorter.class);

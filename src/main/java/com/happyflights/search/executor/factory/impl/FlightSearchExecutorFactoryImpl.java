@@ -39,8 +39,8 @@ public class FlightSearchExecutorFactoryImpl implements FlightSearchExecutorFact
 
     private List<FlightFilteringStrategy> createFilters(FlightSearchCriteria flightSearchCriteria) {
         List<FlightFilteringStrategy> filters = new ArrayList<>();
-        if (!Objects.isNull(flightSearchCriteria.getCancellable())) {
-            filters.add(new CancelableFlightFilter(flightSearchCriteria.getCancellable()));
+        if (!Objects.isNull(flightSearchCriteria.getCancelable())) {
+            filters.add(new CancelableFlightFilter(flightSearchCriteria.getCancelable()));
         }
         if (!Objects.isNull(flightSearchCriteria.getMaxPrice())) {
             filters.add(new MaximumPriceFlightFilter(flightSearchCriteria.getMaxPrice()));

@@ -9,9 +9,9 @@ import com.happyflights.search.strategy.filter.impl.CancelableFlightFilter;
 import com.happyflights.search.strategy.filter.impl.MaximumPriceFlightFilter;
 import com.happyflights.search.strategy.filter.impl.NoOpFlightFilter;
 import com.happyflights.search.strategy.limit.FlightLimitingStrategy;
+import com.happyflights.search.strategy.limit.impl.MaxResultLimiting;
 import com.happyflights.search.strategy.sort.FlightSortStrategy;
 import com.happyflights.search.strategy.sort.impl.LengthFlightSorting;
-import com.happyflights.search.strategy.limit.impl.MaxResultLimiting;
 import com.happyflights.search.strategy.sort.impl.NoOpFlightSorting;
 import com.happyflights.search.strategy.sort.impl.PriceFlightSorting;
 import lombok.NonNull;
@@ -36,10 +36,10 @@ public class FlightSearchExecutorFactoryImpl implements FlightSearchExecutorFact
 
     private List<FlightFilteringStrategy> createFilters(FlightSearchCriteria flightSearchCriteria) {
         List<FlightFilteringStrategy> filters = new ArrayList<>();
-        if(!Objects.isNull(flightSearchCriteria.getCancellable())) {
+        if (!Objects.isNull(flightSearchCriteria.getCancellable())) {
             filters.add(new CancelableFlightFilter(flightSearchCriteria.getCancellable()));
         }
-        if(!Objects.isNull(flightSearchCriteria.getMaxPrice())) {
+        if (!Objects.isNull(flightSearchCriteria.getMaxPrice())) {
             filters.add(new MaximumPriceFlightFilter(flightSearchCriteria.getMaxPrice()));
         }
 

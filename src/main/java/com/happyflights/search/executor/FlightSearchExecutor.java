@@ -28,7 +28,7 @@ public class FlightSearchExecutor {
 
     public Collection<FlightSummary> execute(@NonNull Collection<FlightSummary> flightSummaries) {
         Collection<FlightSummary> result = flightSummaries;
-        for(FlightFilteringStrategy flightFilteringStrategy : flightFilteringStrategies) {
+        for (FlightFilteringStrategy flightFilteringStrategy : flightFilteringStrategies) {
             result = flightFilteringStrategy.filter(result);
         }
         result = flightSortStrategy.sort(result);

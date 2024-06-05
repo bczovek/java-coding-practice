@@ -1,6 +1,7 @@
 package com.happyflights.search.strategy.limit.impl;
 
 import com.happyflights.availability.FlightSummary;
+import com.happyflights.search.strategy.limit.exception.InvalidMaxResultLimitException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class MaxResultLimitingTest {
 
@@ -69,15 +71,14 @@ class MaxResultLimitingTest {
     }
 
     @Test
-    void testLimitWithZeroMaxResultShouldReturnEmptyCollection() {
-        int customMaxResult = 0;
-        underTest = new MaxResultLimiting(customMaxResult);
-        FlightSummary flight1 = FlightSummary.builder().build();
-        FlightSummary flight2 = FlightSummary.builder().build();
-        Collection<FlightSummary> flights = List.of(flight1, flight2);
+    void testWithZeroMaxResultShouldThrowInvalidMaxResultLimitException() {
+        assertThatThrownBy(() -> new MaxResultLimiting(0))
+                .isInstanceOf(InvalidMaxResultLimitException.class);
+    }
 
-        Collection<FlightSummary> result = underTest.limit(flights);
-
-        assertThat(result).isEmpty();
+    @Test
+    void testWithNegativeMaxResultShouldThrowInvalidMaxResultLimitException() {
+        assertThatThrownBy(() -> new MaxResultLimiting(-1))
+                .isInstanceOf(InvalidMaxResultLimitException.class);
     }
 }

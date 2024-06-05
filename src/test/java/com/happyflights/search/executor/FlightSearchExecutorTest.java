@@ -12,8 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class FlightSearchExecutorTest {
 
@@ -60,8 +59,7 @@ class FlightSearchExecutorTest {
 
     @Test
     public void testExecuteWithNullFlightSummariesShouldThrowNullPointerException() {
-        assertThatThrownBy(() -> underTest.execute(null))
-                .isInstanceOf(NullPointerException.class);
+        assertThatNullPointerException().isThrownBy(() -> underTest.execute(null));
     }
 
 }

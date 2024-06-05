@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.time.Instant;
 import java.util.Date;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class FlightSearchCriteriaToAvailabilityRequestConverterTest {
 
@@ -46,14 +45,12 @@ class FlightSearchCriteriaToAvailabilityRequestConverterTest {
                 .numberOfTravellers(2)
                 .build();
 
-        assertThatThrownBy(() -> underTest.convert(criteria))
-                .isInstanceOf(NullPointerException.class);
+        assertThatNullPointerException().isThrownBy(() -> underTest.convert(criteria));
     }
 
     @Test
     void testConvertWithNullCriteriaShouldThrowNullPointerException() {
-        assertThatThrownBy(() -> underTest.convert(null))
-                .isInstanceOf(NullPointerException.class);
+        assertThatNullPointerException().isThrownBy(() -> underTest.convert(null));
     }
 
 }

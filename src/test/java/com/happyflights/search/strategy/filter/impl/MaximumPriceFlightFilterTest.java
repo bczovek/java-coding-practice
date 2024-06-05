@@ -1,6 +1,7 @@
 package com.happyflights.search.strategy.filter.impl;
 
 import com.happyflights.availability.FlightSummary;
+import com.happyflights.search.strategy.filter.exception.InvalidMaximumPriceException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 class MaximumPriceFlightFilterTest {
 
@@ -16,7 +17,7 @@ class MaximumPriceFlightFilterTest {
 
     @BeforeEach
     void setUp() {
-        underTest = new MaximumPriceFlightFilter(100.0F);
+        underTest = new MaximumPriceFlightFilter(100.0f);
     }
 
     @Test
@@ -30,7 +31,7 @@ class MaximumPriceFlightFilterTest {
 
     @Test
     void testFilterWithSingleFlightBelowMaxPriceShouldReturnSameFlight() {
-        FlightSummary flight = FlightSummary.builder().averagePriceInUsd(50.0F).build();
+        FlightSummary flight = FlightSummary.builder().averagePriceInUsd(50.0f).build();
         Collection<FlightSummary> flights = Collections.singletonList(flight);
 
         Collection<FlightSummary> result = underTest.filter(flights);
@@ -40,7 +41,7 @@ class MaximumPriceFlightFilterTest {
 
     @Test
     void testFilterWithSingleFlightAboveMaxPriceShouldReturnEmptyCollection() {
-        FlightSummary flight = FlightSummary.builder().averagePriceInUsd(150.0F).build();
+        FlightSummary flight = FlightSummary.builder().averagePriceInUsd(150.0f).build();
         Collection<FlightSummary> flights = Collections.singletonList(flight);
 
         Collection<FlightSummary> result = underTest.filter(flights);
@@ -50,9 +51,9 @@ class MaximumPriceFlightFilterTest {
 
     @Test
     void testFilterWithMultipleFlightsMixedPricesShouldReturnFilteredCollection() {
-        FlightSummary flight1 = FlightSummary.builder().averagePriceInUsd(50.0F).build();
-        FlightSummary flight2 = FlightSummary.builder().averagePriceInUsd(150.0F).build();
-        FlightSummary flight3 = FlightSummary.builder().averagePriceInUsd(75.0F).build();
+        FlightSummary flight1 = FlightSummary.builder().averagePriceInUsd(50.0f).build();
+        FlightSummary flight2 = FlightSummary.builder().averagePriceInUsd(150.0f).build();
+        FlightSummary flight3 = FlightSummary.builder().averagePriceInUsd(75.0f).build();
         Collection<FlightSummary> flights = List.of(flight1, flight2, flight3);
 
         Collection<FlightSummary> result = underTest.filter(flights);
@@ -61,24 +62,15 @@ class MaximumPriceFlightFilterTest {
     }
 
     @Test
-    void testFilterWithNullShouldThrowException() {
-        // TODO
-        Collection<FlightSummary> result = underTest.filter(null);
-
-        assertThat(result).isNull();
+    void testFilterWithNullShouldThrowNullPointerException() {
+        assertThatNullPointerException().isThrownBy(() -> underTest.filter(null))
+                .withMessage("flights is marked non-null but is null");
     }
 
     @Test
-    void testFilterWithNegativeMaxPriceShouldThrowException() {
-        // TODO: Throw exception when negative max result.
-        underTest = new MaximumPriceFlightFilter(-10);
-
-        FlightSummary flight1 = FlightSummary.builder().averagePriceInUsd(50.0F).build();
-        FlightSummary flight2 = FlightSummary.builder().averagePriceInUsd(150.0F).build();
-        List<FlightSummary> flights = List.of(flight1, flight2);
-
-        Collection<FlightSummary> result = underTest.filter(flights);
-
-        assertThat(result).isEmpty();
+    void testFilterWithNegativeMaxPriceShouldThrowInvalidMaximumPriceException() {
+        assertThatThrownBy(() -> new MaximumPriceFlightFilter(-10f))
+                .isInstanceOf(InvalidMaximumPriceException.class)
+                .hasMessage("Maximum price must be greater than 0. Value provided: -10.000000");
     }
 }

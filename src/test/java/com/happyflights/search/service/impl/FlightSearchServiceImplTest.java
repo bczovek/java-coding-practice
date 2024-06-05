@@ -16,8 +16,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class FlightSearchServiceImplTest {
 
@@ -74,8 +73,7 @@ class FlightSearchServiceImplTest {
 
     @Test
     public void testSearchWithNullCriteriaShouldThrowNullPointerException() {
-        assertThatThrownBy(() -> underTest.search(null))
-                .isInstanceOf(NullPointerException.class);
+        assertThatNullPointerException().isThrownBy(() -> underTest.search(null));
     }
 
 }

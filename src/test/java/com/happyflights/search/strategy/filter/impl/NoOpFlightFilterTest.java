@@ -52,8 +52,8 @@ class NoOpFlightFilterTest {
     }
 
     @Test
-    void testFilterWithNullInputShouldThrowException() {
-        // TODO
-        assertThatNullPointerException().isThrownBy(() -> underTest.filter(null));
+    void testFilterWithNullInputShouldThrowNullPointerException() {
+        assertThatNullPointerException().isThrownBy(() -> underTest.filter(null))
+                .withMessage("flights is marked non-null but is null");
     }
 }

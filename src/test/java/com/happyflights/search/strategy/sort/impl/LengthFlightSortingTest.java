@@ -1,6 +1,7 @@
 package com.happyflights.search.strategy.sort.impl;
 
 import com.happyflights.availability.FlightSummary;
+import com.happyflights.search.strategy.sort.exception.NegativeFlightDurationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,8 +10,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class LengthFlightSortingTest {
 
@@ -31,7 +31,7 @@ class LengthFlightSortingTest {
     }
 
     @Test
-    public void testSortWithSingleFlightShouldReturnSingleFlight() {
+    void testSortWithSingleFlightShouldReturnSingleFlight() {
         FlightSummary flight = FlightSummary.builder()
                 .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
                 .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
@@ -44,7 +44,7 @@ class LengthFlightSortingTest {
     }
 
     @Test
-    public void testSortWithMultipleFlightsShouldReturnSortedFlights() {
+    void testSortWithMultipleFlightsShouldReturnSortedFlights() {
         FlightSummary flight1 = FlightSummary.builder()
                 .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
                 .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
@@ -65,7 +65,7 @@ class LengthFlightSortingTest {
     }
 
     @Test
-    public void testSortWithFlightsHavingSameLengthShouldReturnOriginalOrder() {
+    void testSortWithFlightsHavingSameLengthShouldReturnOriginalOrder() {
         FlightSummary flight1 = FlightSummary.builder()
                 .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
                 .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
@@ -81,47 +81,36 @@ class LengthFlightSortingTest {
         assertThat(result).containsExactly(flight1, flight2);
     }
 
-    // TODO: All
     @Test
-    public void testSortWithNullCollectionShouldThrowNullPointerException() {
-        assertThatThrownBy(() -> underTest.sort(null))
-                .isInstanceOf(NullPointerException.class);
+    void testSortWithNullCollectionShouldThrowNullPointerException() {
+        assertThatNullPointerException().isThrownBy(() -> underTest.sort(null))
+                .withMessage("flights is marked non-null but is null");
     }
 
     @Test
-    public void testSortWithNullFlightInCollectionShouldThrowNullPointerException() {
-        Collection<FlightSummary> flights = List.of(null);
-
-        assertThatThrownBy(() -> underTest.sort(flights))
-                .isInstanceOf(NullPointerException.class);
-    }
-
-    @Test
-    public void testSortWithNullDepartureTimeInFlightShouldThrowNullPointerException() {
+    void testSortWithNullDepartureTimeInFlightShouldThrowIllegalArgumentException() {
         FlightSummary flight = FlightSummary.builder()
                 .departureTime(null)
                 .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
                 .build();
         Collection<FlightSummary> flights = List.of(flight);
 
-        assertThatThrownBy(() -> underTest.sort(flights))
-                .isInstanceOf(NullPointerException.class);
+        assertThatIllegalArgumentException().isThrownBy(() -> underTest.sort(flights));
     }
 
     @Test
-    public void testSortWithNullArrivalTimeInFlightShouldThrowNullPointerException() {
+    void testSortWithNullArrivalTimeInFlightShouldThrowIllegalArgumentException() {
         FlightSummary flight = FlightSummary.builder()
                 .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
                 .arrivalTime(null)
                 .build();
         Collection<FlightSummary> flights = List.of(flight);
 
-        assertThatThrownBy(() -> underTest.sort(flights))
-                .isInstanceOf(NullPointerException.class);
+        assertThatIllegalArgumentException().isThrownBy(() -> underTest.sort(flights));
     }
 
     @Test
-    public void testSortWithNegativeFlightLengthShouldThrowIllegalArgumentException() {
+    void testSortWithNegativeFlightLengthShouldThrowNegativeFlightDurationException() {
         FlightSummary flight = FlightSummary.builder()
                 .departureTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
                 .arrivalTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
@@ -129,7 +118,7 @@ class LengthFlightSortingTest {
         Collection<FlightSummary> flights = List.of(flight);
 
         assertThatThrownBy(() -> underTest.sort(flights))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Flight length cannot be negative");
+                .isInstanceOf(NegativeFlightDurationException.class)
+                .hasMessage(String.format("Flight has negative duration. Flight: %s", flight));
     }
 }

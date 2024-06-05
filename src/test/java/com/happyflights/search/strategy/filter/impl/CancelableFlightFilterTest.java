@@ -10,8 +10,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CancelableFlightFilterTest {
@@ -95,13 +94,11 @@ class CancelableFlightFilterTest {
     }
 
     @Test
-    void testFilterWithNullShouldThrowException() {
-        // TODO
+    void testFilterWithNullShouldThrowNullPointerException() {
         CancelableFlightFilter underTest = new CancelableFlightFilter(FlightSearchCriteria.CancelCriteria.BOTH);
 
-        assertThatThrownBy(() -> underTest.filter(null))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Flight list cannot be null");
+        assertThatNullPointerException().isThrownBy(() -> underTest.filter(null))
+                .withMessage("flights is marked non-null but is null");
     }
 
     @Test

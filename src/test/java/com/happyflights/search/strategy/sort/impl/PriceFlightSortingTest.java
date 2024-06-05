@@ -1,14 +1,14 @@
 package com.happyflights.search.strategy.sort.impl;
 
 import com.happyflights.availability.FlightSummary;
+import com.happyflights.search.strategy.sort.exception.NegativeFlightPriceException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class PriceFlightSortingTest {
 
@@ -73,30 +73,19 @@ class PriceFlightSortingTest {
         assertThat(result).containsExactly(flight1, flight2);
     }
 
-    // TODO: all
-
     @Test
     void testSortWithNullCollectionShouldThrowNullPointerException() {
-        assertThatThrownBy(() -> underTest.sort(null))
-                .isInstanceOf(NullPointerException.class);
+        assertThatNullPointerException().isThrownBy(() -> underTest.sort(null));
     }
 
     @Test
-    void testSortWithNullFlightInCollectionShouldThrowNullPointerException() {
-        Collection<FlightSummary> flights = List.of(null);
-
-        assertThatThrownBy(() -> underTest.sort(flights))
-                .isInstanceOf(NullPointerException.class);
-    }
-
-    @Test
-    void testSortWithNullPriceInFlightShouldThrowNullPointerException() {
+    void testSortWithNegativePriceInFlightShouldThrowNegativeFlightPriceException() {
         FlightSummary flight = FlightSummary.builder()
-                .averagePriceInUsd(0f)
+                .averagePriceInUsd(-1f)
                 .build();
         Collection<FlightSummary> flights = List.of(flight);
 
         assertThatThrownBy(() -> underTest.sort(flights))
-                .isInstanceOf(NullPointerException.class);
+                .isInstanceOf(NegativeFlightPriceException.class);
     }
 }

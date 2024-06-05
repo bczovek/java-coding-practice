@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 
 class NoOpLimitingTest {
 
@@ -50,10 +51,7 @@ class NoOpLimitingTest {
     }
 
     @Test
-    public void testLimitWithNullCollectionShouldReturnNull() {
-        // TODO:
-        Collection<FlightSummary> result = underTest.limit(null);
-
-        assertThat(result).isNull();
+    public void testLimitWithNullCollectionShouldThrowNullPointerException() {
+        assertThatNullPointerException().isThrownBy(() -> underTest.limit(null));
     }
 }

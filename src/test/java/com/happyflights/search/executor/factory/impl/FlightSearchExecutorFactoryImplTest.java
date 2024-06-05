@@ -13,8 +13,7 @@ import com.happyflights.search.strategy.sort.impl.PriceFlightSorting;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class FlightSearchExecutorFactoryImplTest {
 
@@ -101,7 +100,6 @@ class FlightSearchExecutorFactoryImplTest {
 
     @Test
     void testCreateExecutorWithNullCriteriaShouldThrowNullPointerException() {
-        assertThatThrownBy(() -> underTest.createExecutor(null))
-                .isInstanceOf(NullPointerException.class);
+        assertThatNullPointerException().isThrownBy(() -> underTest.createExecutor(null));
     }
 }

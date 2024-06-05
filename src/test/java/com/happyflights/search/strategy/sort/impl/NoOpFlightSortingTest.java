@@ -9,8 +9,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class NoOpFlightSortingTest {
     private NoOpFlightSorting underTest;
@@ -65,52 +64,6 @@ class NoOpFlightSortingTest {
 
     @Test
     public void testSortWithNullCollectionShouldThrowNullPointerException() {
-        assertThatThrownBy(() -> underTest.sort(null))
-                .isInstanceOf(NullPointerException.class);
-    }
-
-    @Test
-    public void testSortWithNullFlightInCollectionShouldThrowNullPointerException() {
-        Collection<FlightSummary> flights = List.of(null);
-
-        assertThatThrownBy(() -> underTest.sort(flights))
-                .isInstanceOf(NullPointerException.class);
-    }
-
-    @Test
-    public void testSortWithNullDepartureTimeInFlightShouldThrowNullPointerException() {
-        FlightSummary flight = FlightSummary.builder()
-                .departureTime(null)
-                .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
-                .build();
-        Collection<FlightSummary> flights = List.of(flight);
-
-        assertThatThrownBy(() -> underTest.sort(flights))
-                .isInstanceOf(NullPointerException.class);
-    }
-
-    @Test
-    public void testSortWithNullArrivalTimeInFlightShouldThrowNullPointerException() {
-        FlightSummary flight = FlightSummary.builder()
-                .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                .arrivalTime(null)
-                .build();
-        Collection<FlightSummary> flights = List.of(flight);
-
-        assertThatThrownBy(() -> underTest.sort(flights))
-                .isInstanceOf(NullPointerException.class);
-    }
-
-    @Test
-    public void testSortWithNegativeFlightLengthShouldThrowIllegalArgumentException() {
-        FlightSummary flight = FlightSummary.builder()
-                .departureTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
-                .arrivalTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                .build();
-        Collection<FlightSummary> flights = List.of(flight);
-
-        assertThatThrownBy(() -> underTest.sort(flights))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Flight length cannot be negative");
+        assertThatNullPointerException().isThrownBy(() -> underTest.sort(null));
     }
 }

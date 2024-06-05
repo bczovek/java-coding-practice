@@ -23,6 +23,7 @@ public class FlightSearchCriteria {
     public enum CancelCriteria {
         CANCELABLE, NON_CANCELABLE, BOTH
     }
+
     public enum SortCriteria {
         PRICE, LENGTH
 

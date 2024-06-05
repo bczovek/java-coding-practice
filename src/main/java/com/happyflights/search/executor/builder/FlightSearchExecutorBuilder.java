@@ -1,5 +1,6 @@
-package com.happyflights.search.executor;
+package com.happyflights.search.executor.builder;
 
+import com.happyflights.search.executor.FlightSearchExecutor;
 import com.happyflights.search.strategy.filter.FlightFilteringStrategy;
 import com.happyflights.search.strategy.limit.FlightLimitingStrategy;
 import com.happyflights.search.strategy.sort.FlightSortStrategy;

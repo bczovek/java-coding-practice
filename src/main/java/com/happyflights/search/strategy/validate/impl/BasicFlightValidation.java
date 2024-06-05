@@ -15,7 +15,7 @@ public class BasicFlightValidation implements FlightValidationStrategy {
     public void validate(@NonNull Collection<FlightSummary> flights) {
         flights.forEach(this::validatePrice);
         flights.forEach(this::validateDates);
-        flights.forEach(this::validateFlightLength);
+        flights.forEach(this::validateFlightDuration);
     }
 
     private void validatePrice(FlightSummary flight) {
@@ -30,7 +30,7 @@ public class BasicFlightValidation implements FlightValidationStrategy {
         }
     }
 
-    private void validateFlightLength(FlightSummary flight) {
+    private void validateFlightDuration(FlightSummary flight) {
         if (Duration.between(flight.getDepartureTime().toInstant(), flight.getArrivalTime().toInstant()).isNegative()) {
             throw new NegativeFlightDurationException(String.format("Flight has negative duration. Flight: %s", flight));
         }

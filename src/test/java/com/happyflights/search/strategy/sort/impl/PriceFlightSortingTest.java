@@ -77,15 +77,4 @@ class PriceFlightSortingTest {
     void testSortWithNullCollectionShouldThrowNullPointerException() {
         assertThatNullPointerException().isThrownBy(() -> underTest.sort(null));
     }
-
-    @Test
-    void testSortWithNegativePriceInFlightShouldThrowNegativeFlightPriceException() {
-        FlightSummary flight = FlightSummary.builder()
-                .averagePriceInUsd(-1f)
-                .build();
-        Collection<FlightSummary> flights = List.of(flight);
-
-        assertThatThrownBy(() -> underTest.sort(flights))
-                .isInstanceOf(NegativeFlightPriceException.class);
-    }
 }

@@ -8,6 +8,7 @@ import com.happyflights.search.strategy.validate.FlightValidationStrategy;
 import lombok.Getter;
 import lombok.NonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class FlightSearchExecutor {
 
 
     public Collection<FlightSummary> execute(@NonNull Collection<FlightSummary> flightSummaries) {
-        Collection<FlightSummary> result = flightSummaries;
+        Collection<FlightSummary> result = new ArrayList<>(flightSummaries);
         flightValidationStrategy.validate(result);
         for (FlightFilteringStrategy flightFilteringStrategy : flightFilteringStrategies) {
             result = flightFilteringStrategy.filter(result);

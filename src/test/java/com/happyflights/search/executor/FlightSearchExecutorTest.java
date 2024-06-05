@@ -4,9 +4,12 @@ import com.happyflights.availability.FlightSummary;
 import com.happyflights.search.strategy.filter.FlightFilteringStrategy;
 import com.happyflights.search.strategy.limit.FlightLimitingStrategy;
 import com.happyflights.search.strategy.sort.FlightSortStrategy;
+import com.happyflights.search.strategy.validate.FlightValidationStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,23 +20,25 @@ import static org.assertj.core.api.Assertions.*;
 class FlightSearchExecutorTest {
 
     private FlightSearchExecutor underTest;
+    @Mock
+    private FlightValidationStrategy mockValidationStrategy;
+    @Mock
     private FlightFilteringStrategy mockFilteringStrategy1;
+    @Mock
     private FlightFilteringStrategy mockFilteringStrategy2;
+    @Mock
     private FlightSortStrategy mockSortStrategy;
+    @Mock
     private FlightLimitingStrategy mockLimitingStrategy;
 
     @BeforeEach
     public void setUp() {
-        mockFilteringStrategy1 = Mockito.mock(FlightFilteringStrategy.class);
-        mockFilteringStrategy2 = Mockito.mock(FlightFilteringStrategy.class);
-        mockSortStrategy = Mockito.mock(FlightSortStrategy.class);
-        mockLimitingStrategy = Mockito.mock(FlightLimitingStrategy.class);
-
+        MockitoAnnotations.openMocks(this);
         List<FlightFilteringStrategy> filteringStrategies = new ArrayList<>();
         filteringStrategies.add(mockFilteringStrategy1);
         filteringStrategies.add(mockFilteringStrategy2);
 
-        underTest = new FlightSearchExecutor(filteringStrategies, mockSortStrategy, mockLimitingStrategy);
+        underTest = new FlightSearchExecutor(mockValidationStrategy, filteringStrategies, mockSortStrategy, mockLimitingStrategy);
     }
 
     @Test
@@ -49,11 +54,12 @@ class FlightSearchExecutorTest {
         Collection<FlightSummary> result = underTest.execute(flights);
 
         assertThat(result).containsExactly(flight);
+        Mockito.verify(mockValidationStrategy).validate(flights);
         Mockito.verify(mockFilteringStrategy1).filter(flights);
         Mockito.verify(mockFilteringStrategy2).filter(flights);
         Mockito.verify(mockSortStrategy).sort(flights);
         Mockito.verify(mockLimitingStrategy).limit(flights);
-        Mockito.verifyNoMoreInteractions(mockFilteringStrategy1, mockFilteringStrategy2,
+        Mockito.verifyNoMoreInteractions(mockValidationStrategy, mockFilteringStrategy1, mockFilteringStrategy2,
                 mockSortStrategy, mockLimitingStrategy);
     }
 

@@ -1,7 +1,7 @@
 package com.happyflights.search.executor.factory.impl;
 
 import com.happyflights.search.executor.FlightSearchExecutor;
-import com.happyflights.search.executor.FlightSearchExecutorBuilder;
+import com.happyflights.search.executor.builder.FlightSearchExecutorBuilder;
 import com.happyflights.search.executor.factory.FlightSearchExecutorFactory;
 import com.happyflights.search.model.FlightSearchCriteria;
 import com.happyflights.search.strategy.filter.FlightFilteringStrategy;

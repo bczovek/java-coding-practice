@@ -1,12 +1,12 @@
 package com.happyflights.search.strategy.sort.impl;
 
 import com.happyflights.availability.FlightSummary;
-import com.happyflights.search.strategy.sort.FlightSortStrategy;
+import com.happyflights.search.strategy.sort.FlightSortingStrategy;
 import lombok.NonNull;
 
 import java.util.Collection;
 
-public class NoOpFlightSorting implements FlightSortStrategy {
+public class NoOpFlightSorter implements FlightSortingStrategy {
     @Override
     public Collection<FlightSummary> sort(@NonNull Collection<FlightSummary> flights) {
         return flights;

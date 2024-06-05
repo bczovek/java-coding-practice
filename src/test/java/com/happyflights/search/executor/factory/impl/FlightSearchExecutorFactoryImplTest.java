@@ -7,9 +7,9 @@ import com.happyflights.search.strategy.filter.impl.MaximumPriceFlightFilter;
 import com.happyflights.search.strategy.filter.impl.NoOpFlightFilter;
 import com.happyflights.search.strategy.limit.FlightLimitingStrategy;
 import com.happyflights.search.strategy.limit.impl.MaxResultLimiting;
-import com.happyflights.search.strategy.sort.impl.LengthFlightSorting;
-import com.happyflights.search.strategy.sort.impl.NoOpFlightSorting;
-import com.happyflights.search.strategy.sort.impl.PriceFlightSorting;
+import com.happyflights.search.strategy.sort.impl.LengthFlightSorter;
+import com.happyflights.search.strategy.sort.impl.NoOpFlightSorter;
+import com.happyflights.search.strategy.sort.impl.PriceFlightSorter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +33,7 @@ class FlightSearchExecutorFactoryImplTest {
 
         assertThat(executor.getFlightFilteringStrategies()).hasSize(1);
         assertThat(executor.getFlightFilteringStrategies().getFirst()).isInstanceOf(NoOpFlightFilter.class);
-        assertThat(executor.getFlightSortStrategy()).isInstanceOf(NoOpFlightSorting.class);
+        assertThat(executor.getFlightSortingStrategy()).isInstanceOf(NoOpFlightSorter.class);
         FlightLimitingStrategy flightLimitingStrategy = executor.getFlightLimitingStrategy();
         assertThat(flightLimitingStrategy).isInstanceOf(MaxResultLimiting.class);
         assertThat(((MaxResultLimiting) flightLimitingStrategy).getMaxResult()).isEqualTo(3);
@@ -71,7 +71,7 @@ class FlightSearchExecutorFactoryImplTest {
 
         FlightSearchExecutor executor = underTest.createExecutor(criteria);
 
-        assertThat(executor.getFlightSortStrategy()).isInstanceOf(PriceFlightSorting.class);
+        assertThat(executor.getFlightSortingStrategy()).isInstanceOf(PriceFlightSorter.class);
     }
 
     @Test
@@ -82,7 +82,7 @@ class FlightSearchExecutorFactoryImplTest {
 
         FlightSearchExecutor executor = underTest.createExecutor(criteria);
 
-        assertThat(executor.getFlightSortStrategy()).isInstanceOf(LengthFlightSorting.class);
+        assertThat(executor.getFlightSortingStrategy()).isInstanceOf(LengthFlightSorter.class);
     }
 
     @Test

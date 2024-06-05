@@ -4,7 +4,7 @@ import com.happyflights.availability.FlightSummary;
 
 import java.util.Collection;
 
-public interface FlightSortStrategy {
+public interface FlightSortingStrategy {
 
     Collection<FlightSummary> sort(Collection<FlightSummary> flights);
 

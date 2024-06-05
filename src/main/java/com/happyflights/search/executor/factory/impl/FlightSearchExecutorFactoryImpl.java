@@ -10,10 +10,10 @@ import com.happyflights.search.strategy.filter.impl.MaximumPriceFlightFilter;
 import com.happyflights.search.strategy.filter.impl.NoOpFlightFilter;
 import com.happyflights.search.strategy.limit.FlightLimitingStrategy;
 import com.happyflights.search.strategy.limit.impl.MaxResultLimiting;
-import com.happyflights.search.strategy.sort.FlightSortStrategy;
-import com.happyflights.search.strategy.sort.impl.LengthFlightSorting;
-import com.happyflights.search.strategy.sort.impl.NoOpFlightSorting;
-import com.happyflights.search.strategy.sort.impl.PriceFlightSorting;
+import com.happyflights.search.strategy.sort.FlightSortingStrategy;
+import com.happyflights.search.strategy.sort.impl.LengthFlightSorter;
+import com.happyflights.search.strategy.sort.impl.NoOpFlightSorter;
+import com.happyflights.search.strategy.sort.impl.PriceFlightSorter;
 import com.happyflights.search.strategy.validate.impl.BasicFlightValidator;
 import lombok.NonNull;
 
@@ -32,7 +32,7 @@ public class FlightSearchExecutorFactoryImpl implements FlightSearchExecutorFact
         createFilters(flightSearchCriteria)
                 .forEach(builder::addFilteringStrategy);
 
-        return builder.withFlightSortStrategy(createSorter(flightSearchCriteria))
+        return builder.withFlightSortingStrategy(createSorter(flightSearchCriteria))
                 .withFlightLimitingStrategy(createLimiter(flightSearchCriteria))
                 .build();
     }
@@ -49,16 +49,16 @@ public class FlightSearchExecutorFactoryImpl implements FlightSearchExecutorFact
         return filters.isEmpty() ? List.of(new NoOpFlightFilter()) : filters;
     }
 
-    private FlightSortStrategy createSorter(FlightSearchCriteria flightSearchCriteria) {
+    private FlightSortingStrategy createSorter(FlightSearchCriteria flightSearchCriteria) {
         switch (flightSearchCriteria.getSortCriteria()) {
             case PRICE -> {
-                return new PriceFlightSorting();
+                return new PriceFlightSorter();
             }
             case LENGTH -> {
-                return new LengthFlightSorting();
+                return new LengthFlightSorter();
             }
             case null, default -> {
-                return new NoOpFlightSorting();
+                return new NoOpFlightSorter();
             }
         }
     }

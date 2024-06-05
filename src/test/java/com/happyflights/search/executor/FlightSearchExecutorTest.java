@@ -3,7 +3,7 @@ package com.happyflights.search.executor;
 import com.happyflights.availability.FlightSummary;
 import com.happyflights.search.strategy.filter.FlightFilteringStrategy;
 import com.happyflights.search.strategy.limit.FlightLimitingStrategy;
-import com.happyflights.search.strategy.sort.FlightSortStrategy;
+import com.happyflights.search.strategy.sort.FlightSortingStrategy;
 import com.happyflights.search.strategy.validate.FlightValidatingStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ class FlightSearchExecutorTest {
     @Mock
     private FlightFilteringStrategy mockFilteringStrategy2;
     @Mock
-    private FlightSortStrategy mockSortStrategy;
+    private FlightSortingStrategy mockSortStrategy;
     @Mock
     private FlightLimitingStrategy mockLimitingStrategy;
 

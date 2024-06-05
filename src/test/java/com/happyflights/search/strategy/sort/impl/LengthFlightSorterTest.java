@@ -11,12 +11,13 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-class NoOpFlightSortingTest {
-    private NoOpFlightSorting underTest;
+class LengthFlightSorterTest {
+
+    private LengthFlightSorter underTest;
 
     @BeforeEach
     void setUp() {
-        underTest = new NoOpFlightSorting();
+        underTest = new LengthFlightSorter();
     }
 
     @Test
@@ -42,7 +43,7 @@ class NoOpFlightSortingTest {
     }
 
     @Test
-    void testSortWithMultipleFlightsShouldReturnUnchangedOrder() {
+    void testSortWithMultipleFlightsShouldReturnSortedFlights() {
         FlightSummary flight1 = FlightSummary.builder()
                 .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
                 .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
@@ -59,11 +60,29 @@ class NoOpFlightSortingTest {
 
         Collection<FlightSummary> result = underTest.sort(flights);
 
-        assertThat(result).containsExactly(flight1, flight2, flight3);
+        assertThat(result).containsExactly(flight2, flight1, flight3);
     }
 
     @Test
-    public void testSortWithNullCollectionShouldThrowNullPointerException() {
-        assertThatNullPointerException().isThrownBy(() -> underTest.sort(null));
+    void testSortWithFlightsHavingSameLengthShouldReturnOriginalOrder() {
+        FlightSummary flight1 = FlightSummary.builder()
+                .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
+                .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
+                .build();
+        FlightSummary flight2 = FlightSummary.builder()
+                .departureTime(Date.from(Instant.parse("2022-01-01T08:00:00Z")))
+                .arrivalTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
+                .build();
+        Collection<FlightSummary> flights = List.of(flight1, flight2);
+
+        Collection<FlightSummary> result = underTest.sort(flights);
+
+        assertThat(result).containsExactly(flight1, flight2);
+    }
+
+    @Test
+    void testSortWithNullCollectionShouldThrowNullPointerException() {
+        assertThatNullPointerException().isThrownBy(() -> underTest.sort(null))
+                .withMessage("flights is marked non-null but is null");
     }
 }

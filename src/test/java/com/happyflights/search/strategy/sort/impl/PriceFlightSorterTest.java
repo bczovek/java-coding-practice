@@ -1,24 +1,21 @@
 package com.happyflights.search.strategy.sort.impl;
 
 import com.happyflights.availability.FlightSummary;
-import com.happyflights.search.strategy.validate.exception.NegativeFlightDurationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.Instant;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-class LengthFlightSortingTest {
+class PriceFlightSorterTest {
 
-    private LengthFlightSorting underTest;
+    private PriceFlightSorter underTest;
 
     @BeforeEach
     void setUp() {
-        underTest = new LengthFlightSorting();
+        underTest = new PriceFlightSorter();
     }
 
     @Test
@@ -33,8 +30,7 @@ class LengthFlightSortingTest {
     @Test
     void testSortWithSingleFlightShouldReturnSingleFlight() {
         FlightSummary flight = FlightSummary.builder()
-                .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
+                .averagePriceInUsd(100.0f)
                 .build();
         Collection<FlightSummary> flights = List.of(flight);
 
@@ -46,16 +42,13 @@ class LengthFlightSortingTest {
     @Test
     void testSortWithMultipleFlightsShouldReturnSortedFlights() {
         FlightSummary flight1 = FlightSummary.builder()
-                .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
+                .averagePriceInUsd(100.0f)
                 .build();
         FlightSummary flight2 = FlightSummary.builder()
-                .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                .arrivalTime(Date.from(Instant.parse("2022-01-01T11:00:00Z")))
+                .averagePriceInUsd(80.0f)
                 .build();
         FlightSummary flight3 = FlightSummary.builder()
-                .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                .arrivalTime(Date.from(Instant.parse("2022-01-01T13:00:00Z")))
+                .averagePriceInUsd(120.0f)
                 .build();
         Collection<FlightSummary> flights = List.of(flight1, flight2, flight3);
 
@@ -65,14 +58,12 @@ class LengthFlightSortingTest {
     }
 
     @Test
-    void testSortWithFlightsHavingSameLengthShouldReturnOriginalOrder() {
+    void testSortWithFlightsHavingSamePriceShouldReturnOriginalOrder() {
         FlightSummary flight1 = FlightSummary.builder()
-                .departureTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                .arrivalTime(Date.from(Instant.parse("2022-01-01T12:00:00Z")))
+                .averagePriceInUsd(100.0f)
                 .build();
         FlightSummary flight2 = FlightSummary.builder()
-                .departureTime(Date.from(Instant.parse("2022-01-01T08:00:00Z")))
-                .arrivalTime(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
+                .averagePriceInUsd(100.0f)
                 .build();
         Collection<FlightSummary> flights = List.of(flight1, flight2);
 
@@ -83,7 +74,6 @@ class LengthFlightSortingTest {
 
     @Test
     void testSortWithNullCollectionShouldThrowNullPointerException() {
-        assertThatNullPointerException().isThrownBy(() -> underTest.sort(null))
-                .withMessage("flights is marked non-null but is null");
+        assertThatNullPointerException().isThrownBy(() -> underTest.sort(null));
     }
 }

@@ -3,7 +3,7 @@ package com.happyflights.search.executor.builder;
 import com.happyflights.search.executor.FlightSearchExecutor;
 import com.happyflights.search.strategy.filter.FlightFilteringStrategy;
 import com.happyflights.search.strategy.limit.FlightLimitingStrategy;
-import com.happyflights.search.strategy.sort.FlightSortStrategy;
+import com.happyflights.search.strategy.sort.FlightSortingStrategy;
 import com.happyflights.search.strategy.validate.FlightValidatingStrategy;
 import lombok.NonNull;
 
@@ -14,7 +14,7 @@ public class FlightSearchExecutorBuilder {
 
     private FlightValidatingStrategy flightValidatingStrategy;
     private final List<FlightFilteringStrategy> flightFilteringStrategies;
-    private FlightSortStrategy flightSortStrategy;
+    private FlightSortingStrategy flightSortingStrategy;
     private FlightLimitingStrategy flightLimitingStrategy;
 
     public FlightSearchExecutorBuilder() {
@@ -31,8 +31,8 @@ public class FlightSearchExecutorBuilder {
         return this;
     }
 
-    public FlightSearchExecutorBuilder withFlightSortStrategy(@NonNull FlightSortStrategy flightSortStrategy) {
-        this.flightSortStrategy = flightSortStrategy;
+    public FlightSearchExecutorBuilder withFlightSortingStrategy(@NonNull FlightSortingStrategy flightSortingStrategy) {
+        this.flightSortingStrategy = flightSortingStrategy;
         return this;
     }
 
@@ -42,6 +42,6 @@ public class FlightSearchExecutorBuilder {
     }
 
     public FlightSearchExecutor build() {
-        return new FlightSearchExecutor(flightValidatingStrategy, flightFilteringStrategies, flightSortStrategy, flightLimitingStrategy);
+        return new FlightSearchExecutor(flightValidatingStrategy, flightFilteringStrategies, flightSortingStrategy, flightLimitingStrategy);
     }
 }

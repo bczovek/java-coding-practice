@@ -4,6 +4,8 @@ import com.happyflights.availability.FlightSummary;
 import com.happyflights.search.model.FlightSearchCriteria;
 import com.happyflights.search.strategy.filter.FlightFilteringStrategy;
 import lombok.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -14,6 +16,8 @@ import java.util.stream.Collectors;
  * The filter criteria is specified by the {@link FlightSearchCriteria.CancelCriteria} enum.
  */
 public class CancelableFlightFilter implements FlightFilteringStrategy {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CancelableFlightFilter.class);
 
     private final FlightSearchCriteria.CancelCriteria cancelCriteria;
 
@@ -36,9 +40,12 @@ public class CancelableFlightFilter implements FlightFilteringStrategy {
      */
     @Override
     public Collection<FlightSummary> filter(@NonNull Collection<FlightSummary> flights) {
-        return flights.stream()
+        LOGGER.info("Filtering flights based on cancel criteria: {}", cancelCriteria);
+        Collection<FlightSummary> filteredFlights = flights.stream()
                 .filter(this::isSuitableFlight)
-                .collect(Collectors.toList());
+                .toList();
+        LOGGER.info("{} flights passed the filter out of {} based on cancel criteria", filteredFlights.size(), flights.size());
+        return filteredFlights;
     }
 
     /**

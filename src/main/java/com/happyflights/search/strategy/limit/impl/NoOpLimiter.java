@@ -3,6 +3,8 @@ package com.happyflights.search.strategy.limit.impl;
 import com.happyflights.availability.FlightSummary;
 import com.happyflights.search.strategy.limit.FlightLimitingStrategy;
 import lombok.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 
@@ -13,6 +15,8 @@ import java.util.Collection;
  */
 public class NoOpLimiter implements FlightLimitingStrategy {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(NoOpLimiter.class);
+
     /**
      * Returns the input collection of {@link FlightSummary} objects without applying any limiting.
      *
@@ -22,6 +26,7 @@ public class NoOpLimiter implements FlightLimitingStrategy {
      */
     @Override
     public Collection<FlightSummary> limit(@NonNull Collection<FlightSummary> flights) {
+        LOGGER.info("No limiting applied, returning all {} flights", flights.size());
         return flights;
     }
 }

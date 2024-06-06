@@ -4,10 +4,14 @@ import com.happyflights.availability.FlightSummary;
 import com.happyflights.search.model.FlightSearchCriteria;
 import com.happyflights.search.strategy.sort.FlightSortingStrategy;
 import lombok.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -17,15 +21,22 @@ import java.util.stream.Collectors;
  */
 public class LengthFlightSorter implements FlightSortingStrategy {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(LengthFlightSorter.class);
+
     private final FlightSearchCriteria.SortOrder sortOrder;
 
     /**
-     * Constructs a {@link LengthFlightSorter} object with the specified sortOrder.
+     * Constructs a {@link LengthFlightSorter} object with the specified sortOrder. In case of null sortOrder, it defaults to ascending
+     * order
      *
      * @param sortOrder A {@link FlightSearchCriteria.SortOrder} enum value indicating the desired sorting order.
      */
     public LengthFlightSorter(FlightSearchCriteria.SortOrder sortOrder) {
-        this.sortOrder = sortOrder;
+        if (Objects.isNull(sortOrder)) {
+            this.sortOrder = FlightSearchCriteria.SortOrder.ASCENDING;
+        } else {
+            this.sortOrder = sortOrder;
+        }
     }
 
     /**
@@ -44,9 +55,12 @@ public class LengthFlightSorter implements FlightSortingStrategy {
      */
     @Override
     public Collection<FlightSummary> sort(@NonNull Collection<FlightSummary> flights) {
-        return flights.stream()
+        LOGGER.info("Sorting flights based on length with order: {}", sortOrder);
+        List<FlightSummary> filteredFlights = flights.stream()
                 .sorted(getComparator())
                 .collect(Collectors.toList());
+        LOGGER.info("Flights sorted based on length with order: {}", sortOrder);
+        return filteredFlights;
     }
 
     /**

@@ -7,6 +7,8 @@ import com.happyflights.search.strategy.sort.FlightSortingStrategy;
 import com.happyflights.search.strategy.validate.FlightValidatingStrategy;
 import lombok.Getter;
 import lombok.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,6 +19,8 @@ import java.util.List;
  * The strategies include validation, filtering, sorting, and limiting.
  */
 public class FlightSearchExecutor {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(FlightSearchExecutor.class);
 
     @Getter
     private final FlightValidatingStrategy flightValidatingStrategy;
@@ -53,6 +57,7 @@ public class FlightSearchExecutor {
      * @throws NullPointerException if the flightSummaries collection is null.
      */
     public Collection<FlightSummary> execute(@NonNull Collection<FlightSummary> flightSummaries) {
+        LOGGER.info("Executing flight search with {} flights", flightSummaries.size());
         Collection<FlightSummary> result = new ArrayList<>(flightSummaries);
         flightValidatingStrategy.validate(result);
 
@@ -61,6 +66,7 @@ public class FlightSearchExecutor {
         }
         result = flightSortingStrategy.sort(result);
         result = flightLimitingStrategy.limit(result);
+        LOGGER.info("Flight search execution completed, returning {} flights", result.size());
         return result;
     }
 

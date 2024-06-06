@@ -4,8 +4,11 @@ import com.happyflights.availability.FlightSummary;
 import com.happyflights.search.strategy.filter.FlightFilteringStrategy;
 import com.happyflights.search.strategy.filter.exception.InvalidMaximumPriceException;
 import lombok.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -13,6 +16,8 @@ import java.util.stream.Collectors;
  * based on a specified maximum price.
  */
 public class MaximumPriceFlightFilter implements FlightFilteringStrategy {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MaximumPriceFlightFilter.class);
 
     private final Float maximumPrice;
 
@@ -38,7 +43,10 @@ public class MaximumPriceFlightFilter implements FlightFilteringStrategy {
      */
     @Override
     public Collection<FlightSummary> filter(@NonNull Collection<FlightSummary> flights) {
-        return flights.stream().filter(flight -> flight.getAveragePriceInUsd() < maximumPrice)
+        LOGGER.info("Filtering flights based on maximum price: {}", maximumPrice);
+        List<FlightSummary> filteredFlights = flights.stream().filter(flight -> flight.getAveragePriceInUsd() < maximumPrice)
                 .collect(Collectors.toList());
+        LOGGER.info("{} flights passed the filter out of {} based on maximum price criteria", filteredFlights.size(), flights.size());
+        return filteredFlights;
     }
 }

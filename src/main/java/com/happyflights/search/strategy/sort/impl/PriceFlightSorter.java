@@ -4,9 +4,12 @@ import com.happyflights.availability.FlightSummary;
 import com.happyflights.search.model.FlightSearchCriteria;
 import com.happyflights.search.strategy.sort.FlightSortingStrategy;
 import lombok.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -15,6 +18,8 @@ import java.util.stream.Collectors;
  * The sorting can be done in ascending or descending order, as specified by the {@link FlightSearchCriteria.SortOrder} enum.
  */
 public class PriceFlightSorter implements FlightSortingStrategy {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PriceFlightSorter.class);
 
     private final FlightSearchCriteria.SortOrder sortOrder;
 
@@ -43,9 +48,12 @@ public class PriceFlightSorter implements FlightSortingStrategy {
      */
     @Override
     public Collection<FlightSummary> sort(@NonNull Collection<FlightSummary> flights) {
-        return flights.stream()
+        LOGGER.info("Sorting flights based on price with order: {}", sortOrder);
+        List<FlightSummary> filteredList = flights.stream()
                 .sorted(getComparator())
                 .collect(Collectors.toList());
+        LOGGER.info("Flights sorted based on price with order: {}", sortOrder);
+        return filteredList;
     }
 
     /**

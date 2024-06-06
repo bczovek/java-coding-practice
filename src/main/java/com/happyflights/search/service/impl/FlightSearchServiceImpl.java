@@ -10,6 +10,8 @@ import com.happyflights.search.executor.factory.FlightSearchExecutorFactory;
 import com.happyflights.search.model.FlightSearchCriteria;
 import com.happyflights.search.service.FlightSearchService;
 import lombok.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 
@@ -21,6 +23,8 @@ import java.util.Collection;
  * a flight availability request.
  */
 public class FlightSearchServiceImpl implements FlightSearchService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(FlightSearchServiceImpl.class);
 
     private final FlightAvailabilityService availabilityService;
     private final FlightSearchExecutorFactory flightSearchExecutorFactory;
@@ -53,11 +57,15 @@ public class FlightSearchServiceImpl implements FlightSearchService {
      */
     @Override
     public Collection<FlightSummary> search(@NonNull FlightSearchCriteria flightSearchCriteria) {
+        LOGGER.info("Searching flights with criteria: {}", flightSearchCriteria);
         Collection<FlightSummary> flightSummaries =
                 availabilityService.getAvailableFlights(converter.convert(flightSearchCriteria));
 
         FlightSearchExecutor flightSearchExecutor = flightSearchExecutorFactory.createExecutor(flightSearchCriteria);
 
-        return flightSearchExecutor.execute(flightSummaries);
+        Collection<FlightSummary> result = flightSearchExecutor.execute(flightSummaries);
+        LOGGER.info("Found {} flights matching the criteria", result.size());
+
+        return result;
     }
 }

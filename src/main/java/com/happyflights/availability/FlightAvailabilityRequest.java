@@ -23,6 +23,8 @@ public class FlightAvailabilityRequest {
     /**
      * The day of departure.
      */
+    // FIXME: java.util.Date is mutable therefore it violates the immutability provided by the @Value annotation,
+    //  use java.time.LocalDate instead.
     @NonNull
     Date departureDate;
     /**

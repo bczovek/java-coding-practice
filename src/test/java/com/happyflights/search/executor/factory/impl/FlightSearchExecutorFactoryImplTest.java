@@ -14,7 +14,11 @@ import com.happyflights.search.strategy.validate.impl.BasicFlightValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static com.happyflights.search.constant.TestDate.DEPARTURE_DATE;
 import static org.assertj.core.api.Assertions.*;
+
+import java.time.Instant;
+import java.util.Date;
 
 class FlightSearchExecutorFactoryImplTest {
 
@@ -27,7 +31,11 @@ class FlightSearchExecutorFactoryImplTest {
 
     @Test
     void testCreateExecutorWithNoCriteriaShouldReturnDefaultStrategies() {
-        FlightSearchCriteria criteria = FlightSearchCriteria.builder().build();
+        FlightSearchCriteria criteria = FlightSearchCriteria.builder()
+                .origin("NYC")
+                .destination("LAX")
+                .departureDate(Date.from(Instant.parse(DEPARTURE_DATE.getValue())))
+                .build();
 
         FlightSearchExecutor executor = underTest.createExecutor(criteria);
 
@@ -43,6 +51,9 @@ class FlightSearchExecutorFactoryImplTest {
     @Test
     void testCreateExecutorWithCancelableCriteriaShouldReturnCancelableFilter() {
         FlightSearchCriteria criteria = FlightSearchCriteria.builder()
+                .origin("NYC")
+                .destination("LAX")
+                .departureDate(Date.from(Instant.parse(DEPARTURE_DATE.getValue())))
                 .cancelable(FlightSearchCriteria.CancelCriteria.BOTH)
                 .build();
 
@@ -55,6 +66,9 @@ class FlightSearchExecutorFactoryImplTest {
     @Test
     void testCreateExecutorWithMaxPriceCriteriaShouldReturnMaximumPriceFilter() {
         FlightSearchCriteria criteria = FlightSearchCriteria.builder()
+                .origin("NYC")
+                .destination("LAX")
+                .departureDate(Date.from(Instant.parse(DEPARTURE_DATE.getValue())))
                 .maxPrice(100.0f)
                 .build();
 
@@ -67,6 +81,9 @@ class FlightSearchExecutorFactoryImplTest {
     @Test
     void testCreateExecutorWithPriceSortCriteriaShouldReturnPriceSortingStrategy() {
         FlightSearchCriteria criteria = FlightSearchCriteria.builder()
+                .origin("NYC")
+                .destination("LAX")
+                .departureDate(Date.from(Instant.parse(DEPARTURE_DATE.getValue())))
                 .sortCriteria(FlightSearchCriteria.SortCriteria.PRICE)
                 .build();
 
@@ -78,6 +95,9 @@ class FlightSearchExecutorFactoryImplTest {
     @Test
     void testCreateExecutorWithLengthSortCriteriaShouldReturnLengthSortingStrategy() {
         FlightSearchCriteria criteria = FlightSearchCriteria.builder()
+                .origin("NYC")
+                .destination("LAX")
+                .departureDate(Date.from(Instant.parse(DEPARTURE_DATE.getValue())))
                 .sortCriteria(FlightSearchCriteria.SortCriteria.LENGTH)
                 .build();
 
@@ -90,6 +110,9 @@ class FlightSearchExecutorFactoryImplTest {
     void testCreateExecutorWithMaxResultsCriteriaShouldReturnMaxResultLimitingStrategy() {
         int customMaxResults = 10;
         FlightSearchCriteria criteria = FlightSearchCriteria.builder()
+                .origin("NYC")
+                .destination("LAX")
+                .departureDate(Date.from(Instant.parse(DEPARTURE_DATE.getValue())))
                 .maxResults(customMaxResults)
                 .build();
 

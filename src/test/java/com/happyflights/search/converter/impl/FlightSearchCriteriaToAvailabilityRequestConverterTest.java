@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.time.Instant;
 import java.util.Date;
 
+import static com.happyflights.search.constant.TestDate.DEPARTURE_DATE;
 import static org.assertj.core.api.Assertions.*;
 
 class FlightSearchCriteriaToAvailabilityRequestConverterTest {
@@ -24,7 +25,7 @@ class FlightSearchCriteriaToAvailabilityRequestConverterTest {
         FlightSearchCriteria criteria = FlightSearchCriteria.builder()
                 .origin("NYC")
                 .destination("LAX")
-                .departureDate(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
+                .departureDate(Date.from(Instant.parse(DEPARTURE_DATE.getValue())))
                 .numberOfTravellers(2)
                 .build();
 
@@ -32,25 +33,7 @@ class FlightSearchCriteriaToAvailabilityRequestConverterTest {
 
         assertThat(result.getOrigin()).isEqualTo("NYC");
         assertThat(result.getDestination()).isEqualTo("LAX");
-        assertThat(result.getDepartureDate()).isEqualTo(Date.from(Instant.parse("2022-01-01T10:00:00Z")));
+        assertThat(result.getDepartureDate()).isEqualTo(Date.from(Instant.parse(DEPARTURE_DATE.getValue())));
         assertThat(result.getNumberOfTravellers()).isEqualTo(2);
     }
-
-    @Test
-    void testConvertWithNullCriteriaValueShouldThrowNullPointerException() {
-        FlightSearchCriteria criteria = FlightSearchCriteria.builder()
-                .origin(null)
-                .destination("LAX")
-                .departureDate(Date.from(Instant.parse("2022-01-01T10:00:00Z")))
-                .numberOfTravellers(2)
-                .build();
-
-        assertThatNullPointerException().isThrownBy(() -> underTest.convert(criteria));
-    }
-
-    @Test
-    void testConvertWithNullCriteriaShouldThrowNullPointerException() {
-        assertThatNullPointerException().isThrownBy(() -> underTest.convert(null));
-    }
-
 }

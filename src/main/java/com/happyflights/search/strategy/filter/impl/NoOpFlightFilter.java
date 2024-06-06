@@ -3,6 +3,8 @@ package com.happyflights.search.strategy.filter.impl;
 import com.happyflights.availability.FlightSummary;
 import com.happyflights.search.strategy.filter.FlightFilteringStrategy;
 import lombok.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 
@@ -14,6 +16,8 @@ import java.util.Collection;
  */
 public class NoOpFlightFilter implements FlightFilteringStrategy {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(NoOpFlightFilter.class);
+
     /**
      * Returns the input collection of {@link FlightSummary} objects without applying any filtering.
      *
@@ -23,6 +27,7 @@ public class NoOpFlightFilter implements FlightFilteringStrategy {
      */
     @Override
     public Collection<FlightSummary> filter(@NonNull Collection<FlightSummary> flights) {
+        LOGGER.info("No filtering applied, returning all {} flights", flights.size());
         return flights;
     }
 }

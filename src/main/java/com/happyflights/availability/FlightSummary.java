@@ -18,14 +18,19 @@ public class FlightSummary {
     /**
      * The departure datetime of the flight.
      */
+    // FIXME: java.util.Date is mutable therefore it violates the immutability provided by the @Value annotation,
+    //  use java.time.LocalDateTime instead.
     Date departureTime;
     /**
      * The expected arrival datetime of the flight.
      */
+    // FIXME: java.util.Date is mutable therefore it violates the immutability provided by the @Value annotation,
+    //  use java.time.LocalDateTime instead.
     Date arrivalTime;
     /**
      * The average price of the seats on this flight.
      */
+    // FIXME: float is not recommended for monetary values. BigDecimal should be used.
     float averagePriceInUsd;
     /**
      * Whether cancellation is possible for this flight.

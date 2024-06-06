@@ -4,8 +4,11 @@ import com.happyflights.availability.FlightSummary;
 import com.happyflights.search.strategy.limit.FlightLimitingStrategy;
 import com.happyflights.search.strategy.limit.exception.InvalidMaxResultLimitException;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -16,7 +19,9 @@ import java.util.stream.Collectors;
 @Getter
 public class MaxResultLimiter implements FlightLimitingStrategy {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MaxResultLimiter.class);
     public static final int DEFAULT_MAX_RESULT = 3;
+
     private final Integer maxResult;
 
     /**
@@ -49,8 +54,11 @@ public class MaxResultLimiter implements FlightLimitingStrategy {
      */
     @Override
     public Collection<FlightSummary> limit(Collection<FlightSummary> flights) {
-        return flights.stream()
+        LOGGER.info("Limiting number of flights. Limit: {}", maxResult);
+        List<FlightSummary> limitedFlights = flights.stream()
                 .limit(maxResult)
                 .collect(Collectors.toList());
+        LOGGER.info("Limited number of flights to {} from {}", limitedFlights.size(), flights.size());
+        return limitedFlights;
     }
 }

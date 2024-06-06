@@ -16,6 +16,8 @@ import com.happyflights.search.strategy.sort.impl.NoOpFlightSorter;
 import com.happyflights.search.strategy.sort.impl.PriceFlightSorter;
 import com.happyflights.search.strategy.validate.impl.BasicFlightValidator;
 import lombok.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,8 @@ import java.util.Objects;
  */
 public class FlightSearchExecutorFactoryImpl implements FlightSearchExecutorFactory {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(FlightSearchExecutorFactoryImpl.class);
+
     /**
      * Creates a {@link FlightSearchExecutor} object based on the provided {@link FlightSearchCriteria}.
      *
@@ -50,16 +54,19 @@ public class FlightSearchExecutorFactoryImpl implements FlightSearchExecutorFact
      */
     @Override
     public FlightSearchExecutor createExecutor(@NonNull FlightSearchCriteria flightSearchCriteria) {
-        FlightSearchExecutorBuilder builder = new FlightSearchExecutorBuilder();
-
-        builder.withValidatingStrategy(new BasicFlightValidator());
+        LOGGER.info("Creating FlightSearchExecutor for criteria: {}", flightSearchCriteria);
+        FlightSearchExecutorBuilder builder = new FlightSearchExecutorBuilder()
+                .withValidatingStrategy(new BasicFlightValidator());
+        LOGGER.debug("Added BasicFlightValidator to FlightSearchExecutorBuilder");
 
         createFilters(flightSearchCriteria)
                 .forEach(builder::addFilteringStrategy);
 
-        return builder.withFlightSortingStrategy(createSorter(flightSearchCriteria))
+        FlightSearchExecutor flightSearchExecutor = builder.withFlightSortingStrategy(createSorter(flightSearchCriteria))
                 .withFlightLimitingStrategy(createLimiter(flightSearchCriteria))
                 .build();
+        LOGGER.info("FlightSearchExecutor created for criteria: {}", flightSearchCriteria);
+        return flightSearchExecutor;
     }
 
     /**
@@ -72,9 +79,11 @@ public class FlightSearchExecutorFactoryImpl implements FlightSearchExecutorFact
         List<FlightFilteringStrategy> filters = new ArrayList<>();
         if (!Objects.isNull(flightSearchCriteria.getCancelable())) {
             filters.add(new CancelableFlightFilter(flightSearchCriteria.getCancelable()));
+            LOGGER.debug("Added CancelableFlightFilter to FlightSearchExecutorBuilder");
         }
         if (!Objects.isNull(flightSearchCriteria.getMaxPrice())) {
             filters.add(new MaximumPriceFlightFilter(flightSearchCriteria.getMaxPrice()));
+            LOGGER.debug("Added MaximumPriceFlightFilter to FlightSearchExecutorBuilder");
         }
 
         return filters.isEmpty() ? List.of(new NoOpFlightFilter()) : filters;
@@ -89,12 +98,15 @@ public class FlightSearchExecutorFactoryImpl implements FlightSearchExecutorFact
     private FlightSortingStrategy createSorter(FlightSearchCriteria flightSearchCriteria) {
         switch (flightSearchCriteria.getSortCriteria()) {
             case PRICE -> {
+                LOGGER.debug("Added PriceFlightSorter to FlightSearchExecutorBuilder");
                 return new PriceFlightSorter(flightSearchCriteria.getSortOrder());
             }
             case LENGTH -> {
+                LOGGER.debug("Added LengthFlightSorter to FlightSearchExecutorBuilder");
                 return new LengthFlightSorter(flightSearchCriteria.getSortOrder());
             }
             case null, default -> {
+                LOGGER.debug("Added NoOpFlightSorter to FlightSearchExecutorBuilder");
                 return new NoOpFlightSorter();
             }
         }
@@ -108,6 +120,14 @@ public class FlightSearchExecutorFactoryImpl implements FlightSearchExecutorFact
      */
     private FlightLimitingStrategy createLimiter(FlightSearchCriteria flightSearchCriteria) {
         Integer maxResults = flightSearchCriteria.getMaxResults();
-        return !Objects.isNull(maxResults) ? new MaxResultLimiter(maxResults) : new MaxResultLimiter();
+        MaxResultLimiter maxResultLimiter;
+        if (!Objects.isNull(maxResults)) {
+            maxResultLimiter = new MaxResultLimiter(maxResults);
+            LOGGER.debug("Added MaxResultLimiter to FlightSearchExecutorBuilder with limit set to {}.", maxResults);
+        } else {
+            maxResultLimiter = new MaxResultLimiter();
+            LOGGER.debug("Added MaxResultLimiter to FlightSearchExecutorBuilder with default limit (3).");
+        }
+        return maxResultLimiter;
     }
 }

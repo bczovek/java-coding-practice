@@ -18,4 +18,6 @@ public interface FlightValidatingStrategy {
      * @throws NullPointerException if the flights collection is null.
      */
     void validate(@NonNull Collection<FlightSummary> flights);
+
+    // FIXME: Create other implementations of this interface to allow the user to apply suitable policy for handling invalid data.
 }

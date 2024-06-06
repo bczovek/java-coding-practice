@@ -21,7 +21,6 @@ public class FlightSearchCriteria {
     private String destination;
     @NonNull
     private Date departureDate;
-    @NonNull
     private Integer numberOfTravellers;
     private CancelCriteria cancelable;
     private Float maxPrice;

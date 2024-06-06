@@ -3,6 +3,8 @@ package com.happyflights.search.strategy.sort.impl;
 import com.happyflights.availability.FlightSummary;
 import com.happyflights.search.strategy.sort.FlightSortingStrategy;
 import lombok.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 
@@ -13,6 +15,8 @@ import java.util.Collection;
  */
 public class NoOpFlightSorter implements FlightSortingStrategy {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(NoOpFlightSorter.class);
+
     /**
      * Returns the input collection of {@link FlightSummary} objects without applying any sorting.
      *
@@ -22,6 +26,7 @@ public class NoOpFlightSorter implements FlightSortingStrategy {
      */
     @Override
     public Collection<FlightSummary> sort(@NonNull Collection<FlightSummary> flights) {
+        LOGGER.info("No sorting applied");
         return flights;
     }
 }

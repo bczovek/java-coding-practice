@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 /**
  * A class that implements the {@link FlightFilteringStrategy} interface to filter a collection of {@link FlightSummary} objects

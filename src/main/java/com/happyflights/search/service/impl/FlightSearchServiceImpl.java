@@ -4,7 +4,6 @@ import com.happyflights.availability.FlightAvailabilityRequest;
 import com.happyflights.availability.FlightAvailabilityService;
 import com.happyflights.availability.FlightSummary;
 import com.happyflights.search.converter.Converter;
-import com.happyflights.search.converter.impl.FlightSearchCriteriaToAvailabilityRequestConverter;
 import com.happyflights.search.executor.FlightSearchExecutor;
 import com.happyflights.search.executor.factory.FlightSearchExecutorFactory;
 import com.happyflights.search.model.FlightSearchCriteria;
